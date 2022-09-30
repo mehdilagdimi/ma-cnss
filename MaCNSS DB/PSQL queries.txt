@@ -1,0 +1,76 @@
+CREATE TABLE patient(
+id_matricule BIGSERIAL NOT NULL PRIMARY KEY,
+nom VARCHAR(100) NOT NULL,
+prenom VARCHAR(100) NOT NULL,
+email VARCHAR(250) UNIQUE NOT NULL,
+password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE agent (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+nom VARCHAR(100) NOT NULL,
+prenom VARCHAR(100) NOT NULL,
+role BOOLEAN NOT NULL,
+email VARCHAR(250) UNIQUE NOT NULL,
+password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE conjoint (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+id_matricule_patient ,
+nom VARCHAR(100) NOT NULL,
+prenom VARCHAR(100) NOT NULL,
+age INT NOT NULL
+);
+
+CREATE TYPE folderstatus AS ENUM ('En attente', 'Refusé', 'Validé');
+
+CREATE TABLE dossier (
+code BIGSERIAL NOT NULL PRIMARY KEY,
+id_matricule_patient BIGSERIAL NOT NULL,
+date DATE NOT NULL DEFAULT CURRENT_DATE,
+nbr_consultation INT NOT NULL,
+etat folderstatus DEFAULT 'En attente',
+path VARCHAR(255),
+
+FOREIGN KEY (id_matricule_patient) REFERENCES patient(id_matricule) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE specialite(
+id SERIAL NOT NULL PRIMARY KEY,
+nom VARCHAR(100) NOT NULL
+);
+
+
+
+CREATE TABLE consultation (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+code_dossier BIGSERIAL NOT NULL,
+id_specialite SERIAL NOT NULLY,
+date DATE NOT NULL DEFAULT CURRENT_DATE,
+is_conjoint BOOLEAN NOT NULL,
+nbr_documents INT NOT NULL,
+montant_paye REAL NOT NULL,
+
+FOREIGN KEY (code_dossier) REFERENCES dossier(code) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (id_specialite) REFERENCES specialite(id) ON UPDATE CASCADE
+);
+
+CREATE TABLE document (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+id_consultation BIGSERIAL NOT NULL,
+id_specialite SERIAL NOT NULLY,
+date DATE NOT NULL DEFAULT CURRENT_DATE,
+is_conjoint BOOLEAN NOT NULL,
+nbr_documents INT NOT NULL,
+montant_paye REAL NOT NULL,
+
+FOREIGN KEY (id_consultation) REFERENCES consultation(id) ON UPDATE CASCADE,
+FOREIGN KEY (id_specialite) REFERENCES specialite(id) ON UPDATE CASCADE
+);
+
+
+
+
+
+
