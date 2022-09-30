@@ -1,3 +1,6 @@
+CREATE TYPE folderstatus AS ENUM ('En attente', 'Refusé', 'Validé');
+CREATE TYPE typedocument AS ENUM ('Médicament', 'Analyse', 'Imagerie');
+
 CREATE TABLE patient(
 id_matricule BIGSERIAL NOT NULL PRIMARY KEY,
 nom VARCHAR(100) NOT NULL,
@@ -17,13 +20,14 @@ password VARCHAR(100) NOT NULL
 
 CREATE TABLE conjoint (
 id BIGSERIAL NOT NULL PRIMARY KEY,
-id_matricule_patient ,
+id_matricule_patient BIGSERIAL NOT NULL,
 nom VARCHAR(100) NOT NULL,
 prenom VARCHAR(100) NOT NULL,
-age INT NOT NULL
+age INT NOT NULL,
+
+FOREIGN KEY (id_matricule_patient) REFERENCES patient(id_matricule) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TYPE folderstatus AS ENUM ('En attente', 'Refusé', 'Validé');
 
 CREATE TABLE dossier (
 code BIGSERIAL NOT NULL PRIMARY KEY,
@@ -41,12 +45,10 @@ id SERIAL NOT NULL PRIMARY KEY,
 nom VARCHAR(100) NOT NULL
 );
 
-
-
 CREATE TABLE consultation (
 id BIGSERIAL NOT NULL PRIMARY KEY,
 code_dossier BIGSERIAL NOT NULL,
-id_specialite SERIAL NOT NULLY,
+id_specialite SERIAL NOT NULL,
 date DATE NOT NULL DEFAULT CURRENT_DATE,
 is_conjoint BOOLEAN NOT NULL,
 nbr_documents INT NOT NULL,
@@ -59,15 +61,34 @@ FOREIGN KEY (id_specialite) REFERENCES specialite(id) ON UPDATE CASCADE
 CREATE TABLE document (
 id BIGSERIAL NOT NULL PRIMARY KEY,
 id_consultation BIGSERIAL NOT NULL,
-id_specialite SERIAL NOT NULLY,
 date DATE NOT NULL DEFAULT CURRENT_DATE,
-is_conjoint BOOLEAN NOT NULL,
-nbr_documents INT NOT NULL,
+type typedocument NOT NULL,
 montant_paye REAL NOT NULL,
 
-FOREIGN KEY (id_consultation) REFERENCES consultation(id) ON UPDATE CASCADE,
-FOREIGN KEY (id_specialite) REFERENCES specialite(id) ON UPDATE CASCADE
+FOREIGN KEY (id_consultation) REFERENCES consultation(id) ON UPDATE CASCADE
 );
+
+CREATE TABLE medicament (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+nom VARCHAR(250) NOT NULL,
+is_remboursable BOOLEAN NOT NULL,
+taux REAL NOT NULL
+);
+
+CREATE TABLE analysemedicale (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+nom VARCHAR(250) NOT NULL,
+is_remboursable BOOLEAN NOT NULL,
+taux REAL NOT NULL
+);
+
+CREATE TABLE imagerie (
+id BIGSERIAL NOT NULL PRIMARY KEY,
+nom VARCHAR(250) NOT NULL,
+is_remboursable BOOLEAN NOT NULL,
+taux REAL NOT NULL
+);
+
 
 
 
