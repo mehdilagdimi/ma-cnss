@@ -41,5 +41,29 @@ public class DBConnection {
             return false;
         }
     }
+    public PreparedStatement prepareStatement (String query, String dataStr) {
+        PreparedStatement preparedQuery = this.prepare(query);
+        if(preparedQuery != null) {
+            try{
+                preparedQuery.setString(1, dataStr);
+            } catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Error with  statement parameter placeholder");
+            }
+        };
+
+    }
+
+    public PreparedStatement prepare (String query) {
+        try{
+            PreparedStatement preparedQuery = conn.prepareStatement(query);
+            System.out.println("Prepared Statement");
+            return preparedQuery;
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("Failed preparing statement");
+            return null;
+        }
+    }
 
 }
