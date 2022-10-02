@@ -7,6 +7,13 @@
     <groupId>com.macnss.project</groupId>
     <artifactId>MaCNSS</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -14,10 +21,9 @@
             <version>42.5.0</version>
         </dependency>
     </dependencies>
-    <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
+
+
+
+
+
 </project>

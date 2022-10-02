@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 Main.class
+=======
+Database\DBConnection.class
+Main.class
+Database\Config.class
+>>>>>>> e92ceafbe6c48f0f6f808824103ea324bd628c4b

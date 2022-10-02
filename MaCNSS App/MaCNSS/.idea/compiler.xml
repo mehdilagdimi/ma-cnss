@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MaCNSS" target="18" />
+      <module name="MaCNSS" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
