@@ -42,6 +42,9 @@ public class DBConnection {
                     case "Integer" :
                         this.preparedStatement.setInt(index, (int)data);
                         break;
+                    case "Long" :
+                        this.preparedStatement.setLong(index, (int)data);
+                        break;
                     case "String":
                         this.preparedStatement.setString(index, (String)data);
                         break;
@@ -65,7 +68,7 @@ public class DBConnection {
     public boolean prepare (String query) {
         try{
             this.preparedStatement = conn.prepareStatement(query);
-            System.out.println("Prepared Statement");
+//            System.out.println("Prepared Statement");
             return true;
         } catch (SQLException e){
             e.printStackTrace();
@@ -77,7 +80,7 @@ public class DBConnection {
     public ResultSet execute (String query) {
         try{
             if(this.preparedStatement != null){
-                resultSet = this.preparedStatement.executeQuery(query);
+                resultSet = this.preparedStatement.executeQuery();
                 return resultSet;
             } else {
                 System.out.println("Prepared query is null!");

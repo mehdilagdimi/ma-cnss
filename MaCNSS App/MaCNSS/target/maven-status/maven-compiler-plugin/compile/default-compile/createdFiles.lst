@@ -1,3 +1,16 @@
+User\Admin\Admin.class
+User\Agent\AgentController.class
+User\Conjoint\ConjointModel.class
+User\Conjoint\Conjoint.class
+User\Patient\PatientModel.class
 Database\DBConnection.class
 Main.class
 Database\Config.class
+User\Admin\AdminModel.class
+User\Patient\PatientController.class
+User\Patient\Patient.class
+User\Admin\AdminController.class
+User\Agent\Agent.class
+User\Conjoint\ConjointController.class
+User\User.class
+User\Agent\AgentModel.class
