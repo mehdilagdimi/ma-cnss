@@ -43,13 +43,13 @@ public class DBConnection {
                         this.preparedStatement.setInt(index, (int)data);
                         break;
                     case "Long" :
-                        this.preparedStatement.setLong(index, (int)data);
+                        this.preparedStatement.setLong(index, (long)data);
                         break;
                     case "String":
                         this.preparedStatement.setString(index, (String)data);
                         break;
                     case "Float":
-                        this.preparedStatement.setDouble(index, (Double)data);
+                        this.preparedStatement.setDouble(index, (Float)data);
                         break;
                     case "Double":
                         this.preparedStatement.setDouble(index, (Double)data);

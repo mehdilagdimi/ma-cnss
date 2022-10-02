@@ -24,4 +24,8 @@ public class Patient {
         Map<String, String> patientMap = patientController.getPatientData(id_matricule);
         System.out.printf("ID Matricule : %s, Nom : %s,  Prénom : %s, Email : %s", patientMap.get("matricule"), patientMap.get("lname"), patientMap.get("fname"), patientMap.get("email"));
     }
+
+    public void disconnect(){
+        patientController.closeDBConnection();
+    }
 }

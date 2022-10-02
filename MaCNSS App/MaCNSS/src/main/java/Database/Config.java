@@ -2,20 +2,20 @@ package Database;
 
 public class Config {
 
-    private final static String url = "jdbc:postgresql://localhost:5432/macnss";
-    private final static String user = "mehdilagdimi";
+    private final static String URL = "jdbc:postgresql://localhost:5432/macnss";
+    private final static String USER = "mehdilagdimi";
     //setup env variable for later use
-    private final static String password = "1234";
+    private final static String PASSWORD = "1234";
 
     public static String getUrl() {
-        return url;
+        return URL;
     }
 
     public static String getUser() {
-        return user;
+        return USER;
     }
 
     public static String getPassword() {
-        return password;
+        return PASSWORD;
     }
 }
