@@ -33,9 +33,28 @@ public class DBConnection {
         return conn;
     }
 
-    public PreparedStatement setParam(int index, String dataStr) {
+    public <T>PreparedStatement setParam(int index, T data) {
             try{
-                this.preparedStatement.setString(index, dataStr);
+                switch (((Object)data).getClass().getSimpleName()){
+                    case "Boolean" :
+                        this.preparedStatement.setBoolean(index, (Boolean)data);
+                        break;
+                    case "Integer" :
+                        this.preparedStatement.setInt(index, (int)data);
+                        break;
+                    case "Long" :
+                        this.preparedStatement.setLong(index, (long)data);
+                        break;
+                    case "String":
+                        this.preparedStatement.setString(index, (String)data);
+                        break;
+                    case "Float":
+                        this.preparedStatement.setDouble(index, (Float)data);
+                        break;
+                    case "Double":
+                        this.preparedStatement.setDouble(index, (Double)data);
+                        break;
+                }
 
             } catch (SQLException e){
                 e.printStackTrace();
@@ -49,7 +68,7 @@ public class DBConnection {
     public boolean prepare (String query) {
         try{
             this.preparedStatement = conn.prepareStatement(query);
-            System.out.println("Prepared Statement");
+//            System.out.println("Prepared Statement");
             return true;
         } catch (SQLException e){
             e.printStackTrace();
@@ -61,7 +80,7 @@ public class DBConnection {
     public ResultSet execute (String query) {
         try{
             if(this.preparedStatement != null){
-                resultSet = this.preparedStatement.executeQuery(query);
+                resultSet = this.preparedStatement.executeQuery();
                 return resultSet;
             } else {
                 System.out.println("Prepared query is null!");

@@ -12,9 +12,12 @@ public class AgentModel extends User{
         table = "agent";
 //        db.closeConnection();
     }
-    public void getAgentByEmail (String email) {
+    public Boolean getAgentByEmail (String email) {
         String query = "SELECT * FROM " + table + " WHERE role = 0 AND email = ? LIMIT 1";
-        db.prepareStatement(query, email);
-        db.execute(query);
+        if(db.prepare(query)){
+            db.setParam(1, email);
+            db.execute(query);
+        }
+        return db.isEmpty();
     }
 }

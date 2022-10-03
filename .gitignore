@@ -1,0 +1,30 @@
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+#Config file
+./MaCNSS App/MaCNSS/src/main/java/Database/Config.java
+
+##############################
+## Temporary files
+##############################
+*.ser
+
+
+
+##############################
+## IntelliJ
+##############################
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
