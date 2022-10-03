@@ -7,6 +7,7 @@ public class Config {
     private final static String USER = "postgres";
     //setup env variable for later use
     private final static String PASSWORD = "admin";
+    private final static String test = "test";
 
     public static String getUrl() {
         return URL;
