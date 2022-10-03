@@ -16,7 +16,7 @@ public class ConjointModel extends User {
         String query = "SELECT * FROM " + table + " WHERE id_matricule_patient = ?";
         if(db.prepare(query)){
             db.setParam(1, id_matricule_patient);
-            db.execute(query);
+            db.execute();
         }
 //        return db.isEmpty();
     }

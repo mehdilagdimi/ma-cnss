@@ -33,27 +33,21 @@ public class DBConnection {
         return conn;
     }
 
-    public <T>PreparedStatement setParam(int index, T data) {
+    /**
+     * Set statement after setting parameters and cast them to the referred type
+     * @param index int
+     * @param data generic type T it can be (Boolean, Int, Long...)
+     * @param <T> generic type T
+     */
+    public <T>void setParam(int index, T data) {
             try{
-                switch (((Object)data).getClass().getSimpleName()){
-                    case "Boolean" :
-                        this.preparedStatement.setBoolean(index, (Boolean)data);
-                        break;
-                    case "Integer" :
-                        this.preparedStatement.setInt(index, (int)data);
-                        break;
-                    case "Long" :
-                        this.preparedStatement.setLong(index, (long)data);
-                        break;
-                    case "String":
-                        this.preparedStatement.setString(index, (String)data);
-                        break;
-                    case "Float":
-                        this.preparedStatement.setDouble(index, (Float)data);
-                        break;
-                    case "Double":
-                        this.preparedStatement.setDouble(index, (Double)data);
-                        break;
+                switch (((Object) data).getClass().getSimpleName()) {
+                    case "Boolean" -> this.preparedStatement.setBoolean(index, (Boolean) data);
+                    case "Integer" -> this.preparedStatement.setInt(index, (int) data);
+                    case "Long" -> this.preparedStatement.setLong(index, (long) data);
+                    case "String" -> this.preparedStatement.setString(index, (String) data);
+                    case "Float" -> this.preparedStatement.setDouble(index, (Float) data);
+                    case "Double" -> this.preparedStatement.setDouble(index, (Double) data);
                 }
 
             } catch (SQLException e){
@@ -61,14 +55,16 @@ public class DBConnection {
                 System.out.println("Error with  statement parameter placeholder");
                 this.preparedStatement = null;
             }
-        return this.preparedStatement;
-
     }
 
+    /**
+     * Set the prepare statement and return true if statement is set
+     * @param query Querry String
+     * @return boolean (true,false)
+     */
     public boolean prepare (String query) {
         try{
             this.preparedStatement = conn.prepareStatement(query);
-//            System.out.println("Prepared Statement");
             return true;
         } catch (SQLException e){
             e.printStackTrace();
@@ -77,7 +73,11 @@ public class DBConnection {
         }
     }
 
-    public ResultSet execute (String query) {
+    /**
+     * Execute query and return a result set
+     * @return ResultSet
+     */
+    public ResultSet execute () {
         try{
             if(this.preparedStatement != null){
                 resultSet = this.preparedStatement.executeQuery();

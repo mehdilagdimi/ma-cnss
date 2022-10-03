@@ -1,5 +1,3 @@
-//import Database.DBConnection;
-
 import User.Patient.Patient;
 
 public class Main {
@@ -12,5 +10,6 @@ public class Main {
         //close DB connection
         patient.disconnect();
     }
+
 
 }
