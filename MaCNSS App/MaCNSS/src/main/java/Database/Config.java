@@ -3,9 +3,9 @@ package Database;
 public class Config {
 
     private final static String url = "jdbc:postgresql://localhost:5432/macnss";
-    private final static String user = "mehdilagdimi";
+    private final static String user = "postgres";
     //setup env variable for later use
-    private final static String password = "1234";
+    private final static String password = "admin";
 
     public static String getUrl() {
         return url;
