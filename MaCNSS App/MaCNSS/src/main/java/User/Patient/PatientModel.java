@@ -2,7 +2,9 @@ package User.Patient;
 
 import User.User;
 
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class PatientModel extends User {
@@ -33,13 +35,22 @@ public class PatientModel extends User {
     }
 
     public ResultSet getPatientByMatricule (int id_matricule) {
+        ResultSet result = null;
         String query = "SELECT * FROM " + table + " WHERE id_matricule = ? LIMIT 1";
-        if(db.prepare(query)){
-            db.setParam(1, Integer.toString(id_matricule));
-            return db.execute(query);
-        } else {
-            return null;
+        try {
+            if (db.prepare(query)) {
+                db.setParam(1, id_matricule);
+                result = db.execute(query);
+                if(result.next()){
+                    return result;
+                } else {
+                    System.out.printf("No result found");
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
+        return result;
     }
 
     public void closeQuery () {
