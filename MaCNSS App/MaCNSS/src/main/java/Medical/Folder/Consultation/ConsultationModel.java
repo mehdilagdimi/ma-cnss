@@ -5,6 +5,8 @@ import Database.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static helper.SystemeHelper.print;
+
 public class ConsultationModel {
 
     protected  DBConnection db = new DBConnection();
@@ -53,22 +55,9 @@ public class ConsultationModel {
     }
 
 
-    public static void main(String[] args) throws SQLException {
-        ConsultationModel newConsultation = new ConsultationModel();
-        ResultSet result = newConsultation.getConsultation(1);
 
-            int id = result.getInt("id");
-            int code_dossier = result.getInt("code_dossier");
-            int id_specialite = result.getInt("id_specialite");
-            int montant_paye = result.getInt("montant_paye");
-            int nbr_documents = result.getInt("nbr_documents");
-            String date = result.getString("date");
-
-
-        System.out.println(id + "\n" + code_dossier +"\n" +  id_specialite +"\n" +  montant_paye +"\n" +  date +"\n" + nbr_documents);
-    }
 //    @Override
 //    public String toString(){
-//        return "Consultation" + result. ;
+//        return print(this.id + "\n" + code_dossier +"\n" +  id_specialite +"\n" +  montant_paye +"\n" +  date +"\n" + nbr_documents);
 //    }
 }
