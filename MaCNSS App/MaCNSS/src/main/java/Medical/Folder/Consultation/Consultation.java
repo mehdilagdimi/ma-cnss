@@ -70,8 +70,5 @@ public class Consultation {
 
     }
 
-    public static void main(String[] args) {
-        Consultation test = new Consultation();
-        test.displayConsultation();
-    }
+
 }
