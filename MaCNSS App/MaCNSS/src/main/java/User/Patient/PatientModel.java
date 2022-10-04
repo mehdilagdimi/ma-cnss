@@ -6,6 +6,8 @@ import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static helper.SystemeHelper.*;
+
 
 public class PatientModel extends User {
 
@@ -29,7 +31,7 @@ public class PatientModel extends User {
         if(db.prepare(query)){
             db.setParam(1, email);
             db.setParam(2, passw);
-            db.execute(query);
+            db.execute();
         }
         return db.isEmpty();
     }
@@ -40,11 +42,11 @@ public class PatientModel extends User {
         try {
             if (db.prepare(query)) {
                 db.setParam(1, id_matricule);
-                result = db.execute(query);
+                result = db.execute();
                 if(result.next()){
                     return result;
                 } else {
-                    System.out.printf("No result found");
+                    System.out.print("No result found");
                 }
             }
         } catch (SQLException e){
