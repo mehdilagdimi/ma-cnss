@@ -8,6 +8,7 @@ public class Config {
     //setup env variable for later use
     private final static String PASSWORD = "admin";
 
+
     public static String getUrl() {
         return URL;
     }

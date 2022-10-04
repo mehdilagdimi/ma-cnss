@@ -4,7 +4,6 @@ import Database.DBConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import static helper.SystemeHelper.print;
 
 public class ConsultationModel {

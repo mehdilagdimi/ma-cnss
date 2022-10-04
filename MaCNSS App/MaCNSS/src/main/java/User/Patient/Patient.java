@@ -1,10 +1,12 @@
 package User.Patient;
 
+import helper.SystemeHelper;
+
 import java.util.Map;
 import java.util.Scanner;
 
-public class Patient {
-    private int id_matricule;
+public class Patient extends SystemeHelper {
+    private long id_matricule;
     public String fname;
     public String lname;
     private String email;
@@ -18,11 +20,28 @@ public class Patient {
         patientController = new PatientController();
     }
 
+    /**
+     * Display a msg to ask agent to enter ID_Matricule of patient and display his info
+     * @return void
+     */
     public void displayPatient(){
-        System.out.println("Enter patient matricule");
+        System.out.println("\nEnter patient matricule : ");
         id_matricule = scanner.nextInt();
         Map<String, String> patientMap = patientController.getPatientData(id_matricule);
         System.out.printf("ID Matricule : %s, Nom : %s,  Prénom : %s, Email : %s", patientMap.get("matricule"), patientMap.get("lname"), patientMap.get("fname"), patientMap.get("email"));
+    }
+
+    public void authenticate(){
+        println("**** \t\t Login Page \t\t ***");
+        println("Enter your email :");
+        this.email = scan().nextLine();
+        println("Enter your password :");
+        this.passw = scan().nextLine();
+        if(patientController.authenticate(email, passw)){
+            println("Successfully authenticated!");
+        } else {
+            println("Failed authentication. Either invalid credentials or patient not existant!");
+        };
     }
 
     public void disconnect(){

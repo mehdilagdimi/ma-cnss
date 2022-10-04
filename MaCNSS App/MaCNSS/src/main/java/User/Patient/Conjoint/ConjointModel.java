@@ -1,4 +1,4 @@
-package User.Conjoint;
+package User.Patient.Conjoint;
 
 import User.User;
 public class ConjointModel extends User {
