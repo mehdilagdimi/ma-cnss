@@ -1,7 +1,11 @@
 package Medical.Folder.Consultation;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import static helper.SystemeHelper.print;
 
 public class ConsultationController {
     private int id;
@@ -10,7 +14,10 @@ public class ConsultationController {
     private int montantPaye;
     private boolean isConjoint;
     private int numDocuments;
-
+    ConsultationModel consultationModel;
+    public ConsultationController() {
+        this.consultationModel = new ConsultationModel();
+    }
     // Getters
     public int getId(){
         return this.id;
@@ -48,23 +55,29 @@ public class ConsultationController {
     }
 
     /**
-     *
      * @param codeDossier
-     * @throws SQLException
+     * @return Array list of object Consultation
      */
-    public void setConsultationByCode(int codeDossier) {
-
-        ConsultationModel newConsultation = new ConsultationModel();
-        ResultSet result = newConsultation.getConsultation(codeDossier);
+    public ArrayList<Consultation> setConsultationByCode(int codeDossier) {
+        ResultSet result = consultationModel.getConsultation(codeDossier);
+        ArrayList<Consultation> consultations = new ArrayList<>();
         try {
-            setId(result.getInt("id")); ;
-            setCodeDossier(result.getInt("code_dossier"));
-            setIdSpecialite(result.getInt("id_specialite"));
-            setMontantPaye(result.getInt("montant_paye"));
-            setNumDocuments(result.getInt("nbr_documents"));
-            setConjoint(result.getBoolean("is_conjoint"));
+            while (result.next()){
+                Consultation newConsultation = new Consultation();
+
+                newConsultation.setId(result.getInt("id"));
+                newConsultation.setCodeDossier(result.getInt("code_dossier"));
+                newConsultation.setIdSpecialite(result.getInt("id_specialite"));
+                newConsultation.setMontantPaye(result.getInt("montant_paye"));
+                newConsultation.setNumDocuments(result.getInt("nbr_documents"));
+                newConsultation.setConjoint(result.getBoolean("is_conjoint"));
+                consultations.add(newConsultation);
+            }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            consultationModel.closeQuery();
         }
+        return consultations;
     }
 }

@@ -37,25 +37,22 @@ public class ConsultationModel {
     public ResultSet getConsultation(int codeDossier) {
         ResultSet result = null;
         String query = "SELECT * FROM consultation WHERE code_dossier = ?";
-        try {
-            if (db.prepare(query)) {
-                db.setParam(1, codeDossier);
-                result = db.execute();
-                if(result.next()){
-                    this.result = result;
-                    return result;
-                } else {
-                    System.out.print("No result found");
-                }
+        if (db.prepare(query)) {
+            db.setParam(1, codeDossier);
+            result = db.execute();
+                this.result = result;
+                return result;
+            } else {
+                System.out.print("No result found");
             }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+
         return result;
     }
 
 
-
+    public void closeQuery () {
+        db.closeQueryOperations();
+    }
 //    @Override
 //    public String toString(){
 //        return print(this.id + "\n" + code_dossier +"\n" +  id_specialite +"\n" +  montant_paye +"\n" +  date +"\n" + nbr_documents);
