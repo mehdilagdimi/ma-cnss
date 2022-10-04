@@ -1,4 +1,4 @@
-package User.Conjoint;
+package User.Patient.Conjoint;
 
 public class ConjointController {
 }
