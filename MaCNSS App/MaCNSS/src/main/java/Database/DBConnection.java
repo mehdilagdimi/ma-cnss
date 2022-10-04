@@ -5,6 +5,8 @@ import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static helper.SystemeHelper.println;
+
 public class DBConnection {
 
     private Connection conn = null;
@@ -102,7 +104,7 @@ public class DBConnection {
                 if (!this.resultSet.isBeforeFirst()) {
                     isEmpty = true;
                 } else {
-                    isEmpty = true;
+                    isEmpty = false;
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

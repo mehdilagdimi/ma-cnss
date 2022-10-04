@@ -20,13 +20,13 @@ public class PatientController {
         patientModel = new PatientModel();
     }
 
-    public Boolean authenticate (String email, String passw) {
-        Boolean isValid = patientModel.getPatient(email, passw);
+    public boolean authenticate (String email, String passw) {
+        boolean isValid = patientModel.isPatientExist(email, passw);
         patientModel.closeQuery();
         return isValid;
     }
 
-    public Map<String, String> getPatientData (int id_matricule) {
+    public Map<String, String> getPatientData (long id_matricule) {
         Map<String, String> patientMap = null;
         ResultSet result = patientModel.getPatientByMatricule(id_matricule);
         try{
