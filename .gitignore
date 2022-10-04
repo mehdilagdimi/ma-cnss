@@ -10,7 +10,7 @@
 hs_err_pid*
 
 #Config file
-./MaCNSS App/MaCNSS/src/main/java/Database/Config.java
+./MaCNSS APP/MaCNSS/src/main/java/Database/Config.java
 
 ##############################
 ## Temporary files

@@ -16,7 +16,7 @@ public class AgentModel extends User{
         String query = "SELECT * FROM " + table + " WHERE role = 0 AND email = ? LIMIT 1";
         if(db.prepare(query)){
             db.setParam(1, email);
-            db.execute(query);
+            db.execute();
         }
         return db.isEmpty();
     }

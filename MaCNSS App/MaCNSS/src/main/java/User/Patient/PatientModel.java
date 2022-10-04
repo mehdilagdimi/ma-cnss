@@ -6,6 +6,8 @@ import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static helper.SystemeHelper.*;
+
 
 public class PatientModel extends User {
 
@@ -45,7 +47,7 @@ public class PatientModel extends User {
                 if(result.next()){
                     return result;
                 } else {
-                    System.out.printf("No result found");
+                    System.out.print("No result found");
                 }
             }
         } catch (SQLException e){
