@@ -77,7 +77,7 @@ public class DBConnection {
         }
     }
 
-    public ResultSet execute (String query) {
+    public ResultSet execute () {
         try{
             if(this.preparedStatement != null){
                 resultSet = this.preparedStatement.executeQuery();

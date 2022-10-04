@@ -16,6 +16,7 @@ public class PatientModel extends User {
     public PatientModel () {
         db.establishConnection();
 //        db.closeConnection();
+
         table = "patient";
     }
 
@@ -29,7 +30,7 @@ public class PatientModel extends User {
         if(db.prepare(query)){
             db.setParam(1, email);
             db.setParam(2, passw);
-            db.execute(query);
+            db.execute();
         }
         return db.isEmpty();
     }
@@ -40,7 +41,7 @@ public class PatientModel extends User {
         try {
             if (db.prepare(query)) {
                 db.setParam(1, id_matricule);
-                result = db.execute(query);
+                result = db.execute();
                 if(result.next()){
                     return result;
                 } else {
