@@ -20,6 +20,26 @@
             <artifactId>postgresql</artifactId>
             <version>42.5.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.james/james-server-protocols-smtp -->
+        <dependency>
+            <groupId>org.apache.james</groupId>
+            <artifactId>james-server-protocols-smtp</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+
+
     </dependencies>
 
 
