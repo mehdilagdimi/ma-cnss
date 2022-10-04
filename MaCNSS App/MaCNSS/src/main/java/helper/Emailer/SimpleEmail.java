@@ -1,5 +1,6 @@
 package helper.Emailer;
 
+import java.time.LocalTime;
 import java.util.*;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -12,15 +13,12 @@ public class SimpleEmail {
     private static String password = "ebodxwtplfvixzxl";
 
     // Assuming you are sending email from localhost
-    private static String host = "localhost";
-
-    public static String verificationSbj = "MaCNSS login verification ";
-
-    public static String codeVerificaitonMsg = "<h3>Code vérification :</h3>  4444";
+//    private static String host = "localhost";
 
 
 
-    public static void sendSimpleEmail (String to, String subject, String msg) {
+
+    public static LocalTime sendSimpleEmail (String to, String subject, String msg) {
         // Getting system properties
         Properties properties = System.getProperties();
 //        properties.setProperty("mail.smtp.host", host);
@@ -38,8 +36,10 @@ public class SimpleEmail {
         });
 
         EmailHelper.sendEmail(session, to, from , subject, msg);
+        return LocalTime.now();
 
     }
+
 
 
 

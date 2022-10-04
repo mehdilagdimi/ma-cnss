@@ -1,3 +1,4 @@
+import User.Agent.Agent;
 import helper.Emailer.SimpleEmail;
 
 public class Main {
@@ -6,9 +7,8 @@ public class Main {
 
 
         //Agent workflow
-//        Agent agent = new Agent();
-//        agent.authenticate();
-        SimpleEmail.sendSimpleEmail("lagdimi.mehdi@gmail.com", SimpleEmail.verificationSbj, SimpleEmail.codeVerificaitonMsg);
+        Agent agent = new Agent();
+        agent.authenticate();
 
 //        Patient patient = new Patient();
 //        patient.displayPatient();

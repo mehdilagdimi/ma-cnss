@@ -1,6 +1,8 @@
 package helper.Emailer;
 
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.Random;
 
 import javax.mail.Message;
 
@@ -10,7 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
-abstract class EmailHelper {
+public abstract class EmailHelper {
     /**
      * Utility method to send simple HTML email
      * @param session
@@ -19,6 +21,7 @@ abstract class EmailHelper {
      * @param body
      */
     public static void sendEmail(Session session, String toEmail, String fromEmail, String subject, String body){
+        LocalTime sentTime = null;
         try
         {
             MimeMessage msg = new MimeMessage(session);
@@ -38,6 +41,7 @@ abstract class EmailHelper {
 
             msg.setSentDate(new Date());
 
+
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             System.out.println("Sending email...");
             Transport.send(msg);
@@ -47,6 +51,26 @@ abstract class EmailHelper {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String codeGenerator () {
+        int len = 6;
+        // Using numeric values
+        String numbers = "0123456789";
+
+        // Using random method
+        Random rndm_method = new Random();
+
+        char[] otp = new char[len];
+
+        for (int i = 0; i < len; i++)
+        {
+            // Use of charAt() method : to get character value
+            // Use of nextInt() as it is scanning the value as int
+            otp[i] = numbers.charAt(rndm_method.nextInt(numbers.length()));
+        }
+
+        return String.valueOf(otp);
     }
 
 }
