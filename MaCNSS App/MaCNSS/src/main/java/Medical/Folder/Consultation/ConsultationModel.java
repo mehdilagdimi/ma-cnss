@@ -4,6 +4,7 @@ import Database.DBConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static helper.SystemeHelper.print;
 
 public class ConsultationModel {
 
@@ -35,40 +36,24 @@ public class ConsultationModel {
     public ResultSet getConsultation(int codeDossier) {
         ResultSet result = null;
         String query = "SELECT * FROM consultation WHERE code_dossier = ?";
-        try {
-            if (db.prepare(query)) {
-                db.setParam(1, codeDossier);
-                result = db.execute();
-                if(result.next()){
-                    this.result = result;
-                    return result;
-                } else {
-                    System.out.print("No result found");
-                }
+        if (db.prepare(query)) {
+            db.setParam(1, codeDossier);
+            result = db.execute();
+                this.result = result;
+                return result;
+            } else {
+                System.out.print("No result found");
             }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+
         return result;
     }
 
 
-    public static void main(String[] args) throws SQLException {
-        ConsultationModel newConsultation = new ConsultationModel();
-        ResultSet result = newConsultation.getConsultation(1);
-
-            int id = result.getInt("id");
-            int code_dossier = result.getInt("code_dossier");
-            int id_specialite = result.getInt("id_specialite");
-            int montant_paye = result.getInt("montant_paye");
-            int nbr_documents = result.getInt("nbr_documents");
-            String date = result.getString("date");
-
-
-        System.out.println(id + "\n" + code_dossier +"\n" +  id_specialite +"\n" +  montant_paye +"\n" +  date +"\n" + nbr_documents);
+    public void closeQuery () {
+        db.closeQueryOperations();
     }
 //    @Override
 //    public String toString(){
-//        return "Consultation" + result. ;
+//        return print(this.id + "\n" + code_dossier +"\n" +  id_specialite +"\n" +  montant_paye +"\n" +  date +"\n" + nbr_documents);
 //    }
 }

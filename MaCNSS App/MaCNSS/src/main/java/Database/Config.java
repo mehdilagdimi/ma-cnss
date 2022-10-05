@@ -4,10 +4,10 @@ public class Config {
 
 
     private final static String URL = "jdbc:postgresql://localhost:5432/macnss";
-    private final static String USER = "mehdilagdimi";
+    private final static String USER = "postgres";
     //setup env variable for later use
-    private final static String PASSWORD = "1234";
-//    private final static String test = "test";
+    private final static String PASSWORD = "admin";
+
 
     public static String getUrl() {
         return URL;
