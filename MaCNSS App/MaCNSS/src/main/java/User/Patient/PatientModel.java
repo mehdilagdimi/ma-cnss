@@ -17,10 +17,6 @@ public class PatientModel extends User {
         table = "patient";
     }
 
-    public void closeDBConnection () {
-        db.closeConnection();
-        System.out.println("Closed DB conn");
-    }
 
     public boolean isPatientExist (String email, String passw) {
         String query = "SELECT * FROM " + table + " WHERE email = ? AND password = ? LIMIT 1";
@@ -49,6 +45,11 @@ public class PatientModel extends User {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void closeDBConnection () {
+        db.closeConnection();
+        System.out.println("Closed DB conn");
     }
 
     public void closeQuery () {

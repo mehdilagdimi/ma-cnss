@@ -1,9 +1,15 @@
 package Medical.Folder.Consultation;
 
+import helper.Specialite;
+
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static helper.SystemeHelper.print;
 
@@ -80,4 +86,37 @@ public class ConsultationController {
         }
         return consultations;
     }
+
+    public boolean createConsultation (long codeDossier, int idSpecialité, LocalDate date, boolean isConjoint, int montantPaye,  int numDocuments) {
+        boolean isSuccessful = false;
+        isSuccessful = this.consultationModel.addConsultation(codeDossier, idSpecialité, date, isConjoint, montantPaye, numDocuments);
+            //close resultset and statement
+        this.consultationModel.closeQuery();
+        return isSuccessful;
+    }
+
+    public List<Specialite> getAllSpecialites () {
+        List<Specialite> listSpecialite = new ArrayList<>();
+        ResultSet result = consultationModel.getAllSpecialites();
+        try{
+            while(result.next()){
+                Specialite specialite = new Specialite();
+                specialite.id = result. getInt("id");
+                specialite.nom = result.getString("nom");
+                listSpecialite.add(specialite);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            //close resultset and statement
+            consultationModel.closeQuery();
+            return listSpecialite;
+        }
+    }
+
+    public void closeDBConnection () {
+        this.consultationModel.closeDBConnection();
+    }
+
+
 }

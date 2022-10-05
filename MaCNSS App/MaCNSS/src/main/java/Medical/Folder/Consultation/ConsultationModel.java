@@ -4,15 +4,18 @@ import Database.DBConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+
 import static helper.SystemeHelper.print;
 
 public class ConsultationModel {
 
     protected  DBConnection db = new DBConnection();
     ResultSet  result = null;
-
+    public String table;
     public ConsultationModel(){
         db.establishConnection();
+        table = "consultation";
     }
     /**
      * Check if consultation exist using the parameter giving
@@ -48,6 +51,40 @@ public class ConsultationModel {
         return result;
     }
 
+    public boolean addConsultation (long codeDossier, int id_specialite, LocalDate date, boolean isConjoint, int montantPaye, int numDocuments) {
+        boolean success = false;
+        String query = "INSERT INTO " + table + " (code_dossier,  id_specialite, date, is_conjoint, nbr_documents, montant_paye) VALUES (?, ?, ?, ?, ?, ?)";
+        if(db.prepare(query)){
+            db.setParam(1, codeDossier);
+            db.setParam(2, id_specialite);
+            db.setParam(3, date);
+            db.setParam(4, isConjoint);
+            db.setParam(5, numDocuments);
+            db.setParam(6, montantPaye);
+            if(db.executeUpdate() > 0){
+                success = true;
+            };
+        }
+        return success;
+    }
+
+    public ResultSet getAllSpecialites() {
+        ResultSet result = null;
+        String query = "SELECT * FROM specialite ORDER BY id";
+        if (db.prepare(query)) {
+            result = db.execute();
+            return result;
+        } else {
+            System.out.print("No result found");
+        }
+
+        return result;
+    }
+
+    public void closeDBConnection () {
+        db.closeConnection();
+        System.out.println("Closed DB conn");
+    }
 
     public void closeQuery () {
         db.closeQueryOperations();

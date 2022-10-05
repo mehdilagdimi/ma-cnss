@@ -50,6 +50,7 @@ public class DBConnection {
                     case "String" -> this.preparedStatement.setString(index, (String) data);
                     case "Float" -> this.preparedStatement.setDouble(index, (Float) data);
                     case "Double" -> this.preparedStatement.setDouble(index, (Double) data);
+                    case "LocalDate" -> this.preparedStatement.setObject(index, data);
                 }
 
             } catch (SQLException e){
@@ -96,6 +97,23 @@ public class DBConnection {
             return null;
         }
     }
+    public int executeUpdate () {
+        int count = 0;
+        try{
+            if(this.preparedStatement != null){
+                count = this.preparedStatement.executeUpdate();
+            } else {
+                System.out.println("Prepared query is null!");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            ;
+        }
+        return count;
+    }
+
+
 
     public boolean isEmpty() {
         Boolean isEmpty = true;
