@@ -1,26 +1,25 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-Main.class
-=======
-Database\DBConnection.class
-Main.class
-Database\Config.class
->>>>>>> e92ceafbe6c48f0f6f808824103ea324bd628c4b
-=======
-User\Admin\Admin.class
-User\Agent\AgentController.class
-User\Conjoint\ConjointModel.class
-User\Conjoint\Conjoint.class
+helper\SystemeHelper.class
+Medical\Folder\Document\Document$Type.class
 User\Patient\PatientModel.class
-Database\DBConnection.class
+Medical\Folder\Consultation\ConsultationController.class
 Main.class
-Database\Config.class
-User\Admin\AdminModel.class
 User\Patient\PatientController.class
 User\Patient\Patient.class
+Medical\Folder\Consultation\Consultation.class
 User\Admin\AdminController.class
-User\Agent\Agent.class
-User\Conjoint\ConjointController.class
+Medical\Folder\Document\DocumentController.class
+Medical\Folder\Consultation\ConsultationModel.class
 User\User.class
 User\Agent\AgentModel.class
->>>>>>> c09c2a9a77323e65f638ba1bb082afc1f004d5a2
+User\Patient\Conjoint\ConjointController.class
+User\Admin\Admin.class
+User\Agent\AgentController.class
+User\Patient\Conjoint\Conjoint.class
+Database\DBConnection.class
+User\Patient\Conjoint\ConjointModel.class
+Database\Config.class
+User\Admin\AdminModel.class
+Medical\Folder\Document\Document.class
+User\Agent\Agent.class
+helper\EmailService.class
+Medical\Folder\Document\DocumentModel.class

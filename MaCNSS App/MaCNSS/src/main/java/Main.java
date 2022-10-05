@@ -1,5 +1,5 @@
 import User.Agent.Agent;
-import User.Patient.Patient;
+import helper.Emailer.SimpleEmail;
 
 public class Main {
 
@@ -9,6 +9,7 @@ public class Main {
         //Agent workflow
         Agent agent = new Agent();
         agent.authenticate();
+
 //        Patient patient = new Patient();
 //        patient.displayPatient();
 
