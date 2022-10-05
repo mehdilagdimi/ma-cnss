@@ -76,7 +76,6 @@ public class DBConnection {
     }
 
 
-
     /**
      * Execute query and return a result set
      * @return ResultSet
@@ -95,6 +94,22 @@ public class DBConnection {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public int executeUpdate () {
+        int count = 0;
+        try{
+            if(this.preparedStatement != null){
+                count = this.preparedStatement.executeUpdate();
+            } else {
+                System.out.println("Prepared query is null!");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            ;
+        }
+        return count;
     }
 
     public boolean isEmpty() {

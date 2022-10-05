@@ -32,6 +32,14 @@ public class PatientModel extends User {
         return !db.isEmpty();
     }
 
+    public boolean isPatientExistByMatrecule (long matrecule) {
+        String query = "SELECT * FROM patient WHERE id_matricule = ?";
+        if(db.prepare(query)){
+            db.setParam(1, matrecule);
+            db.execute();
+        }
+        return !db.isEmpty();
+    }
     public ResultSet getPatientByMatricule (long id_matricule) {
         ResultSet result = null;
         String query = "SELECT * FROM " + table + " WHERE id_matricule = ? LIMIT 1";

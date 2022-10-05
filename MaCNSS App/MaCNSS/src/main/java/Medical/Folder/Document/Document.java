@@ -81,9 +81,6 @@ public class Document {
         ArrayList<Document> dossiers =  controller.setDocuments(idConsultation);
         print(dossiers.toString());
     }
-    public static void main(String[] args) {
-        Document test = new Document();
-        test.displayDocuments();
-    }
+
 
 }
