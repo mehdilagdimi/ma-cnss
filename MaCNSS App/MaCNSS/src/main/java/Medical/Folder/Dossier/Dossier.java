@@ -65,7 +65,7 @@ public class Dossier {
                 "\n Date de creation  =  " + this.date +
                 "\n Nombre de Cinsultation  =  " + this.nbrConsultation +
                 "\n Matricule =  "+ this.matrecule +
-                "\n Etat du dossier  " + this.status +
+                "\n Etat du dossier  =" + this.status +
                 "\n";
 
     }
@@ -96,8 +96,19 @@ public class Dossier {
        List<Dossier> filteredDossier = dossiers.stream().filter(dossier -> dossier.getStatus().equals("En attente")).toList();
         println(filteredDossier.toString());
     }
+    public void updateDossierStatus(){
+        println("------------------ Validation ----------------");
+        println("Entrer le matricule du patient :");
+        long idMatricule = scan().nextLong();
+        println(controller.setDossierList(idMatricule).toString());
+        println("\n-Entrer le code du patient :");
+        long codeDossier = scan().nextLong();
+        Dossier dossier = controller.getDossierByCode(idMatricule,codeDossier);
+
+        println(dossier.toString());
+    }
     public static void main(String[] args) {
         Dossier newDossier = new Dossier();
-        newDossier.addNewDossier();
+        newDossier.updateDossierStatus();
     }
 }

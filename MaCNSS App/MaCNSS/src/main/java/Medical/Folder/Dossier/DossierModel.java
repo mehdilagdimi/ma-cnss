@@ -47,6 +47,21 @@ public class DossierModel {
 
         return result;
     }
+    public ResultSet fetchDossierByCode(long matrecule,long code) {
+        ResultSet result = null;
+        String query = "SELECT * FROM dossier WHERE id_matricule_patient = ? AND code = ?";
+        if (db.prepare(query)) {
+            db.setParam(1, matrecule);
+            db.setParam(2, code);
+            result = db.execute();
+            this.result = result;
+            return result;
+        } else {
+            System.out.print("No result found");
+        }
+
+        return result;
+    }
 
     public ResultSet getAllDossiers() {
         ResultSet result = null;
