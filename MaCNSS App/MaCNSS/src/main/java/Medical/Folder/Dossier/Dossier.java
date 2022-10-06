@@ -85,17 +85,27 @@ public class Dossier {
     }
 
     public void addNewDossier(){
+        long codeDossier;
         PatientController patientController = new PatientController();
         println("Entrer le matricule du patient :");
         long idMatricule = scan().nextLong();
         if (patientController.checkPatientIsAvailable(idMatricule)){
             println("Entrer le nombre des consultations joinier");
-            int nbrConsultation = scan().nextInt();
-            controller.addNewDossier( idMatricule, nbrConsultation);
+            this.nbrConsultation = scan().nextInt();
+            codeDossier = controller.addNewDossier( idMatricule, this.nbrConsultation);
+            if(codeDossier != -1){
+                setCodeDossier(codeDossier);
+            } else {
+                println("Erreur, le dossier n'était pas ajouté");
+            }
         }else{
             println("Erreur Matrecule introuvable");
         }
 
+    }
+
+    public void setCodeDossier (long codeDossier) {
+        this.code = codeDossier;
     }
     public void  displayDossiers(){
         println("\n -------------   Dossiers  -------------");
@@ -118,7 +128,7 @@ public class Dossier {
         }
     }
     public void displayPatientAllFoldersSortedByPending(long id_matricule){
-       ArrayList<Dossier> dossiers = controller.getAllDossiers();
+       ArrayList<Dossier> dossiers = controller.setDossierList(id_matricule);
        List<Dossier> filteredDossier = Stream.concat(dossiers.stream().filter(dossier -> dossier.status.equals("EN_ATTENTE")), dossiers.stream().filter((dossier) -> dossier.status.equals("REFUSE") || dossier.status.equals("VALIDE"))).toList();
        filteredDossier.forEach(System.out::print);
     }

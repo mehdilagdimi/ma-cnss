@@ -39,6 +39,7 @@ public class Main {
     private static void agentWorkflow () {
         Agent agent = new Agent();
         Dossier dossier = new Dossier();
+
         if(!agent.authenticate()){
             return;
         };
@@ -47,9 +48,11 @@ public class Main {
         println("1 - \t Ajouter nouveau dossier :");
         println("2 - \t Vérifier dossiers existants :");
         println("3 - \t Exit :");
+
         switch (scan().nextInt()){
             case 1 :
                 dossier.addNewDossier();
+                enterConsultationsData(dossier.getNbrConsultation(), dossier.getCode());
                 break;
             case 2 :
                 dossier.displayPatientAllPendingFolders();
@@ -59,8 +62,15 @@ public class Main {
         }
 
     }
+    public static void enterConsultationsData (int nbrConsultation, long codeDossier) {
+        Consultation consultation = new Consultation();
+        while(nbrConsultation > 0){
+            consultation.addConsultation(codeDossier);
+            nbrConsultation--;
+        }
+    }
 
-    //Agent workflow
+    //Patient workflow
 
     private static void patientWorkflow () {
         Patient patient = new Patient();

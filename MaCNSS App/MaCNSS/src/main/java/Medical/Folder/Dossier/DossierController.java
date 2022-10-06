@@ -77,7 +77,8 @@ public class DossierController {
         return dossiers;
     }
 
-    public void addNewDossier(long idMatricule, int nbrConsultation) {
-        dossierModel.addNewDossier(idMatricule,nbrConsultation);
+    public long addNewDossier(long idMatricule, int nbrConsultation) {
+        return dossierModel.addNewDossier(idMatricule,nbrConsultation);
+
     }
 }
