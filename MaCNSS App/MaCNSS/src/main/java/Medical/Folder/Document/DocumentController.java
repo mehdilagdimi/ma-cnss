@@ -24,7 +24,6 @@ public class DocumentController {
                 Document  newDoc = new Document();
 
                 newDoc.setId(result.getInt("id"));
-                String date = "16/08/2016";
                 newDoc.setDate(LocalDate.parse(result.getString("date"), formatter));
                 newDoc.setMontantPaye(result.getFloat("id_consultation"));
                 newDoc.setIdConsultation(result.getInt("montant_paye"));

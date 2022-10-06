@@ -1,4 +1,5 @@
 import Medical.Folder.Consultation.Consultation;
+import Medical.Folder.Document.Document;
 import Medical.Folder.Dossier.Dossier;
 import User.Agent.Agent;
 import User.Patient.Patient;
@@ -9,30 +10,28 @@ public class Main {
     public static boolean repeat = true;
     public static void main(String[] args) {
 
+        while(repeat){
+            println("\t ---- \t Welcome to MaCNSS Dashboard \t ---- ");
+            println("\t 1 - \t Continuer en tant qu'Admin ");
+            println("\t 2 - \t Continuer en tant qu'Agent MaCNSS ");
+            println("\t 3 - \t Continuer en tant que Bénéficiaire du MaCNSS ");
+            println("\t 4 - \t Exit ");
 
-    while(repeat){
-        println("\t ---- \t Welcome to MaCNSS Dashboard \t ---- ");
-        println("\t 1 - \t Continuer en tant qu'Admin ");
-        println("\t 2 - \t Continuer en tant qu'Agent MaCNSS ");
-        println("\t 3 - \t Continuer en tant que Bénéficiaire du MaCNSS ");
-        println("\t 4 - \t Exit ");
-
-        switch(scan().nextInt()){
-            case 1 :
-                adminWorkflow();
-                break;
-            case 2 :
-                agentWorkflow();
-                break;
-            case 3 :
-                patientWorkflow();
-                break;
-            case 4 :
-                repeat = false;
-                break;
+            switch(scan().nextInt()){
+                case 1 :
+                    adminWorkflow();
+                    break;
+                case 2 :
+                    agentWorkflow();
+                    break;
+                case 3 :
+                    patientWorkflow();
+                    break;
+                case 4 :
+                    repeat = false;
+                    break;
+            }
         }
-    }
-
     }
 
     //Agent workflow
@@ -58,10 +57,12 @@ public class Main {
                 return;
         }
 
+
+
     }
 
-    //Agent workflow
 
+    //Agent workflow
     private static void patientWorkflow () {
         Patient patient = new Patient();
         patient.authenticate();
