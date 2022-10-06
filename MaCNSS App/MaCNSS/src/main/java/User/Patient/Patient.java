@@ -20,6 +20,7 @@ public class Patient extends SystemeHelper {
         patientController = new PatientController();
     }
 
+
     /**
      * Display a msg to ask agent to enter ID_Matricule of patient and display his info
      * @return void
@@ -46,5 +47,18 @@ public class Patient extends SystemeHelper {
 
     public void disconnect(){
         patientController.closeDBConnection();
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id_matricule=" + id_matricule +
+                ", fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                ", email='" + email + '\'' +
+                ", passw='" + passw + '\'' +
+                ", scanner=" + scanner +
+                ", patientController=" + patientController +
+                '}';
     }
 }

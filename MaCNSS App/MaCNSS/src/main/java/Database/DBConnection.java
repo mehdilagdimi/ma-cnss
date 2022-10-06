@@ -50,6 +50,7 @@ public class DBConnection {
                     case "String" -> this.preparedStatement.setString(index, (String) data);
                     case "Float" -> this.preparedStatement.setDouble(index, (Float) data);
                     case "Double" -> this.preparedStatement.setDouble(index, (Double) data);
+                    case "LocalDate" -> this.preparedStatement.setObject(index, data);
                 }
 
             } catch (SQLException e){
@@ -95,7 +96,6 @@ public class DBConnection {
             return null;
         }
     }
-
     public int executeUpdate () {
         int count = 0;
         try{
@@ -111,6 +111,8 @@ public class DBConnection {
         }
         return count;
     }
+
+
 
     public boolean isEmpty() {
         Boolean isEmpty = true;

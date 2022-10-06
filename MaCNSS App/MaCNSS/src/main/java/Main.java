@@ -1,5 +1,7 @@
+import Medical.Folder.Consultation.Consultation;
 import User.Agent.Agent;
 import helper.Emailer.SimpleEmail;
+import org.checkerframework.checker.units.qual.C;
 
 public class Main {
 
@@ -7,9 +9,10 @@ public class Main {
 
 
         //Agent workflow
-        Agent agent = new Agent();
-        agent.authenticate();
-
+//        Agent agent = new Agent();
+//        agent.authenticate();
+        Consultation consultation = new Consultation();
+        consultation.addConsultation(3);
 //        Patient patient = new Patient();
 //        patient.displayPatient();
 
