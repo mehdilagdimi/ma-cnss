@@ -91,6 +91,7 @@ public class Consultation {
         this.numDocuments = scan().nextInt();
 
         //get specialities from DB
+        println("Entrer le numéro du spécialité :");
         List<Specialite> specialites = this.controller.getAllSpecialites();
         for(Specialite specialite : specialites){
             println("\t" + String.valueOf(specialite.id) + "- " + specialite.nom);

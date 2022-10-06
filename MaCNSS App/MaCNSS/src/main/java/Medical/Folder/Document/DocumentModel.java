@@ -3,13 +3,16 @@ package Medical.Folder.Document;
 import Database.DBConnection;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public class DocumentModel {
+    private String table;
     protected DBConnection db = new DBConnection();
     ResultSet result = null;
 
     public DocumentModel(){
         db.establishConnection();
+        table = "document";
     }
     /**
      * Check if consultation exist using the parameter giving
@@ -43,6 +46,23 @@ public class DocumentModel {
 
         return result;
     }
+
+    public boolean addDocument (long idConsultation, LocalDate date, float montantPaye, String type) {
+        boolean success = false;
+        String query = "INSERT INTO " + table + " (id_consultation, date, type, montant_paye) VALUES (?, ?, ?::typedocument, ?)";
+        if(db.prepare(query)){
+            db.setParam(1, idConsultation);
+            db.setParam(2, date);
+            db.setParam(3, type);
+            db.setParam(4, montantPaye);
+
+            if(db.executeUpdate() > 0){
+                success = true;
+            };
+        }
+        return success;
+    }
+
     public void closeQuery () {
         db.closeQueryOperations();
     }
