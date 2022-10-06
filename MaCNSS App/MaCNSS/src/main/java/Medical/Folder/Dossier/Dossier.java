@@ -120,7 +120,7 @@ public class Dossier {
     public void displayPatientAllFoldersSortedByPending(long id_matricule){
        ArrayList<Dossier> dossiers = controller.getAllDossiers();
        List<Dossier> filteredDossier = Stream.concat(dossiers.stream().filter(dossier -> dossier.status.equals("EN_ATTENTE")), dossiers.stream().filter((dossier) -> dossier.status.equals("REFUSE") || dossier.status.equals("VALIDE"))).toList();
-       println(filteredDossier.toString());
+       filteredDossier.forEach(System.out::print);
     }
 
     public void updateDossierStatus(){
