@@ -65,7 +65,6 @@ public class Main {
     private static void patientWorkflow () {
         Patient patient = new Patient();
         patient.authenticate();
-        patient.displayPatient();;
 
         Dossier dossier = new  Dossier();
         dossier.displayPatientAllFoldersSortedByPending(patient.getId_matricule());

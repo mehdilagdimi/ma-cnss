@@ -54,6 +54,24 @@ public class PatientModel extends User {
         }
         return result;
     }
+    public ResultSet getPatientByEmail (String email) {
+        ResultSet result = null;
+        String query = "SELECT * FROM " + table + " WHERE email = ? LIMIT 1";
+        try {
+            if (db.prepare(query)) {
+                db.setParam(1, email);
+                result = db.execute();
+                if(result.next()){
+                    return result;
+                } else {
+                    System.out.print("No result found");
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     public void closeDBConnection () {
         db.closeConnection();
