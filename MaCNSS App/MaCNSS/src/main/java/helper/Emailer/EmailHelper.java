@@ -15,10 +15,10 @@ import javax.mail.internet.MimeMessage;
 public abstract class EmailHelper {
     /**
      * Utility method to send simple HTML email
-     * @param session
-     * @param toEmail
-     * @param subject
-     * @param body
+     * @param session Session
+     * @param toEmail String
+     * @param subject String
+     * @param body String
      */
     public static void sendEmail(Session session, String toEmail, String fromEmail, String subject, String body){
         LocalTime sentTime = null;
@@ -52,6 +52,7 @@ public abstract class EmailHelper {
             e.printStackTrace();
         }
     }
+
 
     public static String codeGenerator () {
         int len = 6;

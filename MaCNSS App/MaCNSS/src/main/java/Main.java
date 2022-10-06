@@ -1,7 +1,6 @@
 import Medical.Folder.Consultation.Consultation;
 import User.Agent.Agent;
 import helper.Emailer.SimpleEmail;
-import org.checkerframework.checker.units.qual.C;
 
 public class Main {
 

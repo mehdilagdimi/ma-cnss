@@ -7,8 +7,7 @@ import helper.Emailer.SimpleEmail;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
-import static helper.SystemeHelper.println;
-import static helper.SystemeHelper.scan;
+import static helper.SystemeHelper.*;
 
 public class Agent{
     private long id;
@@ -68,6 +67,12 @@ public class Agent{
         return false;
     }
 
+    public int menuDossier(){
+        println("####################### Menu Dossier #######################");
+        println("1. Entre un nouveau dossier");
+        println("2. Voire liste des dossiers");
+        return scan().nextInt();
+    }
 
     public void disconnect(){
         agentController.closeDBConnection();

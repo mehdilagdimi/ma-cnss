@@ -47,5 +47,7 @@ public class PatientController {
     public void closeDBConnection () {
         patientModel.closeDBConnection();
     }
-
+    public boolean checkPatientIsAvailable(long matrecule){
+        return patientModel.isPatientExistByMatrecule(matrecule);
+    }
 }
