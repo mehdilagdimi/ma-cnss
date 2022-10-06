@@ -72,6 +72,7 @@ public class Consultation {
     public void addConsultation (long codeDossier) {
         println("-------------   Adding consultation data  -------------");
         println("Entrér la date de consultation :  (ex : 26/07/2022)");
+        scan().nextLine();
         String dateStr = scan().nextLine();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy" )
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -91,7 +92,7 @@ public class Consultation {
         this.numDocuments = scan().nextInt();
 
         //get specialities from DB
-        println("Entrer le numéro du spécialité :");
+        println("Spécialité ? ");
         List<Specialite> specialites = this.controller.getAllSpecialites();
         for(Specialite specialite : specialites){
             println("\t" + String.valueOf(specialite.id) + "- " + specialite.nom);
