@@ -1,4 +1,4 @@
-CREATE TYPE folderstatus AS ENUM ('En attente', 'Refusé', 'Validé');
+CREATE TYPE folderstatus AS ENUM ('EN_ATTENTE', 'REFUSE', 'VALIDE');
 CREATE TYPE typedocument AS ENUM ('Médicament', 'Analyse', 'Imagerie');
 
 CREATE TABLE patient(
@@ -34,7 +34,7 @@ code BIGSERIAL NOT NULL PRIMARY KEY,
 id_matricule_patient BIGSERIAL NOT NULL,
 date DATE NOT NULL DEFAULT CURRENT_DATE,
 nbr_consultation INT NOT NULL,
-etat folderstatus DEFAULT 'En attente',
+etat folderstatus DEFAULT 'EN_ATTENTE',
 path VARCHAR(255),
 
 FOREIGN KEY (id_matricule_patient) REFERENCES patient(id_matricule) ON UPDATE CASCADE ON DELETE CASCADE

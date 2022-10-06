@@ -87,12 +87,19 @@ public class ConsultationController {
         return consultations;
     }
 
-    public boolean createConsultation (long codeDossier, int idSpecialité, LocalDate date, boolean isConjoint, int montantPaye,  int numDocuments) {
-        boolean isSuccessful = false;
-        isSuccessful = this.consultationModel.addConsultation(codeDossier, idSpecialité, date, isConjoint, montantPaye, numDocuments);
-            //close resultset and statement
-        this.consultationModel.closeQuery();
-        return isSuccessful;
+    public long createConsultation (long codeDossier, int idSpecialité, LocalDate date, boolean isConjoint, int montantPaye,  int numDocuments) {
+        long id_consultation = -1;
+        try{
+            ResultSet resultSet = this.consultationModel.addConsultation(codeDossier, idSpecialité, date, isConjoint, montantPaye, numDocuments);
+            if(resultSet != null){
+                id_consultation = resultSet.getLong("id");
+            }
+                //close resultset and statement
+            this.consultationModel.closeQuery();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return id_consultation;
     }
 
     public List<Specialite> getAllSpecialites () {
