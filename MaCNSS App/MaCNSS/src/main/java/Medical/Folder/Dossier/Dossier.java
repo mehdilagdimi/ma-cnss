@@ -1,6 +1,11 @@
 package Medical.Folder.Dossier;
 
+import User.Agent.Agent;
+import User.Patient.PatientController;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static helper.SystemeHelper.*;
 import static helper.SystemeHelper.print;
@@ -56,21 +61,54 @@ public class Dossier {
     }
     @Override
     public String toString(){
-        return  "\n" + this.code +
-                "\n" + this.date +
-                "\n" + this.nbrConsultation +
-                "\n" + this.matrecule +
-                "\n" + this.status +
+        return  "\n Code  =  " + this.code +
+                "\n Date de creation  =  " + this.date +
+                "\n Nombre de Cinsultation  =  " + this.nbrConsultation +
+                "\n Matricule =  "+ this.matrecule +
+                "\n Etat du dossier  =" + this.status +
                 "\n";
 
     }
 
-    public void  displayConsultation(){
-        println("\n -------------   Consultation -------------");
-        print("Enter consultation Code");
+    public void addNewDossier(){
+        PatientController patientController = new PatientController();
+        println("Entrer le matricule du patient :");
+        long idMatricule = scan().nextLong();
+        if (patientController.checkPatientIsAvailable(idMatricule)){
+            println("Entrer le nombre des consultations joinier");
+            int nbrConsultation = scan().nextInt();
+            controller.addNewDossier( idMatricule, nbrConsultation);
+        }else{
+            println("Erreur Matrecule introuvable");
+        }
+
+    }
+    public void  displayDossiers(){
+        println("\n -------------   Dossiers  -------------");
+        print("Enter matricule du patient :");
         long matrecule = scan().nextLong();
         ArrayList<Dossier> dossiers =  controller.setDossierList(matrecule);
         print(dossiers.toString());
     }
 
+    public void displayMatriculeAndStatus(){
+       ArrayList<Dossier> dossiers = controller.getAllDossiers();
+       List<Dossier> filteredDossier = dossiers.stream().filter(dossier -> dossier.getStatus().equals("En attente")).toList();
+        println(filteredDossier.toString());
+    }
+    public void updateDossierStatus(){
+        println("------------------ Validation ----------------");
+        println("Entrer le matricule du patient :");
+        long idMatricule = scan().nextLong();
+        println(controller.setDossierList(idMatricule).toString());
+        println("\n-Entrer le code du patient :");
+        long codeDossier = scan().nextLong();
+        Dossier dossier = controller.getDossierByCode(idMatricule,codeDossier);
+
+        println(dossier.toString());
+    }
+    public static void main(String[] args) {
+        Dossier newDossier = new Dossier();
+        newDossier.updateDossierStatus();
+    }
 }
