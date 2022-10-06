@@ -1,5 +1,6 @@
 package Medical.Folder.Consultation;
 
+import Medical.Folder.Document.Document;
 import helper.Specialite;
 
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import static helper.SystemeHelper.*;
 public class Consultation {
     private final ConsultationController controller;
 
-    private int id;
+    private long id;
     private long codeDossier;
     private LocalDate date;
     private int idSpecialite;
@@ -22,8 +23,17 @@ public class Consultation {
     private boolean isConjoint;
     private int numDocuments;
 
+    public void setListDocuments(List<Document> listDocuments) {
+        this.listDocuments = listDocuments;
+    }
+
+    public List<Document> getListDocuments() {
+        return listDocuments;
+    }
+
+    private List<Document> listDocuments;
     // Getters
-    public int getId(){
+    public long getId(){
         return this.id;
     }
     public long codeDossier(){
@@ -39,7 +49,7 @@ public class Consultation {
         return this.numDocuments;
     }
     // Setters
-    public void setId(int id){
+    public void setId(long id){
         this.id = id;
     }
     public void setCodeDossier(long codeDossier){
@@ -97,8 +107,13 @@ public class Consultation {
         for(Specialite specialite : specialites){
             println("\t" + String.valueOf(specialite.id) + "- " + specialite.nom);
         }
+        scan().nextLine();
         this.idSpecialite = scan().nextInt();
-        if(this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments)){
+
+        //add consu and set the id for the object
+        setId(this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments));
+
+        if(this.id != -1){
             println("Consultation added successfully");
         } else {
             println("Failed adding consultation");

@@ -83,6 +83,7 @@ public class Document {
 
         println("-------------   Adding document data  -------------");
         println("Entrer la date du document :  (ex : 26/07/2022)");
+        scan().nextLine();
         String dateStr = scan().nextLine();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.date = LocalDate.parse(dateStr, formatter);
