@@ -9,6 +9,8 @@ public class Patient extends SystemeHelper {
     private long id_matricule;
     public String fname;
     public String lname;
+
+
     private String email;
     private String passw;
 
@@ -49,6 +51,9 @@ public class Patient extends SystemeHelper {
         patientController.closeDBConnection();
     }
 
+    public long getId_matricule() {
+        return id_matricule;
+    }
     @Override
     public String toString() {
         return "Patient{" +

@@ -15,13 +15,13 @@ public class DossierController {
         this.dossierModel = new DossierModel();
     }
     public ArrayList<Dossier> setDossierList(long matrecule) {
-        ResultSet result = dossierModel.getDossierByMatrecule(matrecule);
+        ResultSet result = dossierModel.getDossiersByMatrecule(matrecule);
         ArrayList<Dossier> dossiers = new ArrayList<>();
         try {
             while (result.next()){
                 Dossier  newDossier = new Dossier();
 
-                newDossier.setCode(result.getInt("code"));
+                newDossier.setCode(result.getLong("code"));
                 newDossier.setDate(result.getString("date"));
                 newDossier.setMatrecule(result.getInt("id_matricule_patient"));
                 newDossier.setNbrConsultation(result.getInt("nbr_consultation"));

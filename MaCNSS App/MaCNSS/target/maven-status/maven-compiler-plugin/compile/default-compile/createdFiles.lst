@@ -1,5 +1,5 @@
 helper\SystemeHelper.class
-Medical\Folder\Document\Document$Type.class
+helper\Emailer\SimpleEmail.class
 User\Patient\PatientModel.class
 Medical\Folder\Consultation\ConsultationController.class
 Main.class
@@ -7,7 +7,10 @@ User\Patient\PatientController.class
 User\Patient\Patient.class
 Medical\Folder\Consultation\Consultation.class
 User\Admin\AdminController.class
+Medical\Folder\Dossier\Dossier.class
 Medical\Folder\Document\DocumentController.class
+Medical\Folder\Dossier\DossierModel.class
+helper\Specialite.class
 Medical\Folder\Consultation\ConsultationModel.class
 User\User.class
 User\Agent\AgentModel.class
@@ -15,11 +18,14 @@ User\Patient\Conjoint\ConjointController.class
 User\Admin\Admin.class
 User\Agent\AgentController.class
 User\Patient\Conjoint\Conjoint.class
+Medical\Folder\Dossier\DossierController.class
 Database\DBConnection.class
 User\Patient\Conjoint\ConjointModel.class
 Database\Config.class
 User\Admin\AdminModel.class
+helper\Emailer\SimpleEmail$1.class
 Medical\Folder\Document\Document.class
 User\Agent\Agent.class
-helper\EmailService.class
+helper\Emailer\EmailHelper.class
 Medical\Folder\Document\DocumentModel.class
+Medical\Folder\Document\Document$TypeDoc.class

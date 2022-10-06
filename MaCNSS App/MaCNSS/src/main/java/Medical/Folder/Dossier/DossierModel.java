@@ -33,14 +33,14 @@ public class DossierModel {
      * @param matrecule long
      * @return result ResultSet
      */
-    public ResultSet getDossierByMatrecule(long matrecule) {
+    public ResultSet getDossiersByMatrecule(long matrecule) {
         ResultSet result = null;
         String query = "SELECT * FROM dossier WHERE id_matricule_patient = ?";
         if (db.prepare(query)) {
             db.setParam(1, matrecule);
             result = db.execute();
             this.result = result;
-            return result;
+
         } else {
             System.out.print("No result found");
         }

@@ -6,11 +6,25 @@ import User.Patient.PatientController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static helper.SystemeHelper.*;
 import static helper.SystemeHelper.print;
 
 public class Dossier {
+    public enum StatusDoc{
+        EN_ATTENTE("En attente"),
+        REFUSE("Refusé"),
+        VALIDE("Validé");
+        private String name;
+        StatusDoc(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return this.name;
+        }
+    }
+
     DossierController controller;
     private long code;
     private String date;
@@ -19,7 +33,7 @@ public class Dossier {
     private String status;
 
     // Setters
-    public void setCode(int code){
+    public void setCode(long code){
         this.code = code;
     }
     public void setDate(String date){
@@ -91,11 +105,24 @@ public class Dossier {
         print(dossiers.toString());
     }
 
-    public void displayMatriculeAndStatus(){
-       ArrayList<Dossier> dossiers = controller.getAllDossiers();
-       List<Dossier> filteredDossier = dossiers.stream().filter(dossier -> dossier.getStatus().equals("En attente")).toList();
-        println(filteredDossier.toString());
+    public void displayPatientAllPendingFolders(){
+        PatientController patientController = new PatientController();
+        println("Entrer le matricule du patient :");
+        long id_matricule = scan().nextLong();
+        if (patientController.checkPatientIsAvailable(id_matricule)){
+            ArrayList<Dossier> dossiers = controller.setDossierList(id_matricule);
+            List<Dossier> filteredDossier = dossiers.stream().filter(dossier -> dossier.getStatus().equals("EN_ATTENTE")).toList();
+            println(filteredDossier.toString());
+        }else{
+            println("Erreur Matrecule introuvable");
+        }
     }
+    public void displayPatientAllFoldersSortedByPending(long id_matricule){
+       ArrayList<Dossier> dossiers = controller.getAllDossiers();
+       List<Dossier> filteredDossier = Stream.concat(dossiers.stream().filter(dossier -> dossier.status.equals("EN_ATTENTE")), dossiers.stream().filter((dossier) -> dossier.status.equals("REFUSE") || dossier.status.equals("VALIDE"))).toList();
+       println(filteredDossier.toString());
+    }
+
     public void updateDossierStatus(){
         println("------------------ Validation ----------------");
         println("Entrer le matricule du patient :");

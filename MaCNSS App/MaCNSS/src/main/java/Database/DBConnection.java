@@ -27,7 +27,7 @@ public class DBConnection {
 
         try {
             conn = DriverManager.getConnection(Config.getUrl(), Config.getUser(), Config.getPassword());
-            System.out.println("Connected to the PostgreSQL server successfully.");
+//            System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -113,22 +113,6 @@ public class DBConnection {
     }
 
 
-
-    public int executeUpdate () {
-        int count = 0;
-        try{
-            if(this.preparedStatement != null){
-                count = this.preparedStatement.executeUpdate();
-            } else {
-                System.out.println("Prepared query is null!");
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            ;
-        }
-        return count;
-    }
 
     public boolean isEmpty() {
         Boolean isEmpty = true;
