@@ -43,7 +43,29 @@ public class PatientController {
             return patientMap;
         }
     }
+    public Map<String, String> getPatientDataByEmail (String email) {
+        Map<String, String> patientMap = null;
+        ResultSet result = patientModel.getPatientByEmail(email);
+        try{
+            patientMap = new HashMap<>(Map.ofEntries(
+                    Map.entry("matricule", String.valueOf(result. getLong("id_matricule"))),
+                    Map.entry("fname", result.getString("prenom")),
+                    Map.entry("lname", result.getString("nom")),
+                    Map.entry("email", result.getString("email"))
+            ));
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            patientModel.closeQuery();
+            return patientMap;
+        }
+    }
 
+    public long getPatientMatricule (String email) {
+        Map<String, String> patientMap = getPatientDataByEmail(email);
+        return Long.parseLong(patientMap.get("matricule"));
+
+    }
     public void closeDBConnection () {
         patientModel.closeDBConnection();
     }

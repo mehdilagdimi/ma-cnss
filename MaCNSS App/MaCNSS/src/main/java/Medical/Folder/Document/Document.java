@@ -15,9 +15,9 @@ import static helper.SystemeHelper.print;
 public class Document {
 
     private enum TypeDoc{
-        Médicament,
-        Analyse,
-        Imagerie
+        MEDICAMENT,
+        ANALYSE,
+        IMAGERIE
     }
 
     private final DocumentController controller;

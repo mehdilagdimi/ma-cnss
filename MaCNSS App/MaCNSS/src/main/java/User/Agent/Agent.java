@@ -23,6 +23,7 @@ public class Agent{
         boolean isAllValid = false;
         println("**** \t\t Login Page \t\t ***");
         println("Enter your email :");
+        scan().nextLine();
         this.email = scan().nextLine();
         println("Enter your password :");
         this.passw = scan().nextLine();
