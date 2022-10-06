@@ -21,55 +21,76 @@ public class Consultation {
     private int montantPaye;
     private boolean isConjoint;
     private int numDocuments;
+    private double sumConsultationRefund;
 
     // Getters
-    public int getId(){
+    public int getId() {
         return this.id;
     }
-    public long codeDossier(){
+
+    public long codeDossier() {
         return this.codeDossier;
     }
-    public int getMontantPaye(){
+
+    public int getMontantPaye() {
         return this.montantPaye;
     }
-    public int getIdSpecialite(){
+
+    public int getIdSpecialite() {
         return this.idSpecialite;
     }
-    public int getNumDocuments(){
+
+    public int getNumDocuments() {
         return this.numDocuments;
     }
+
+    public double getSumConsultationRefund() {
+        return sumConsultationRefund;
+    }
+
+
     // Setters
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
-    public void setCodeDossier(long codeDossier){
+
+    public void setCodeDossier(long codeDossier) {
         this.codeDossier = codeDossier;
     }
-    public void setIdSpecialite(int id){
+
+    public void setIdSpecialite(int id) {
         this.idSpecialite = id;
     }
-    public void setConjoint(boolean isConjoint){
+
+    public void setConjoint(boolean isConjoint) {
         this.isConjoint = isConjoint;
     }
-    public void setMontantPaye(int montant){
+
+    public void setMontantPaye(int montant) {
         this.montantPaye = montant;
     }
-    public void setNumDocuments(int numDocuments){
+
+    public void setNumDocuments(int numDocuments) {
         this.numDocuments = numDocuments;
     }
-    public Consultation(){
+
+    public Consultation() {
         this.controller = new ConsultationController();
     }
 
-    public void  displayConsultation(){
-       println("\n -------------   Consultation -------------");
-       print("Enter consultation Code");
-       int code = scan().nextInt();
-       ArrayList<Consultation> consultations =  controller.setConsultationByCode(code);
-       print(consultations.toString());
+    public void setSumConsultationRefund(double sumConsultationRefund) {
+        this.sumConsultationRefund += sumConsultationRefund;
     }
 
-    public void addConsultation (long codeDossier) {
+    public void displayConsultation() {
+        println("\n -------------   Consultation -------------");
+        print("Enter consultation Code");
+        int code = scan().nextInt();
+        ArrayList<Consultation> consultations = controller.setConsultationByCode(code);
+        print(consultations.toString());
+    }
+
+    public void addConsultation(long codeDossier) {
         println("-------------   Adding consultation data  -------------");
         println("Entrér la date de consultation :  (ex : 26/07/2022)");
         String dateStr = scan().nextLine();
@@ -78,11 +99,12 @@ public class Consultation {
         this.date = LocalDate.parse(dateStr, formatter);
 
         println("Le bénéficiare est-t-il un conjoint? : Y/N");
-       if(scan().next().toUpperCase() == "Y"){
+        if (scan().next().toUpperCase() == "Y") {
             this.isConjoint = true;
         } else {
-           this.isConjoint = false;
-       };
+            this.isConjoint = false;
+        }
+        ;
 
         println("Entrer le montant payé (DHs):");
         this.montantPaye = scan().nextInt();
@@ -93,15 +115,17 @@ public class Consultation {
         //get specialities from DB
         println("Entrer le numéro du spécialité :");
         List<Specialite> specialites = this.controller.getAllSpecialites();
-        for(Specialite specialite : specialites){
+        for (Specialite specialite : specialites) {
             println("\t" + String.valueOf(specialite.id) + "- " + specialite.nom);
         }
         this.idSpecialite = scan().nextInt();
-        if(this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments)){
+        setSumConsultationRefund(controller.setRefundsPrice(this.idSpecialite));
+        if (this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments)) {
             println("Consultation added successfully");
         } else {
             println("Failed adding consultation");
-        };
+        }
+        ;
     }
 
 //    public void getAllspecialiteTest(){
@@ -112,15 +136,16 @@ public class Consultation {
 //    }
 
     @Override
-    public String toString(){
-        return  "\n" + this.codeDossier +
+    public String toString() {
+        return "------------------------------" +
+                "\n" + this.codeDossier +
                 "\n" + this.idSpecialite +
                 "\n" + this.montantPaye +
                 "\n" + this.isConjoint +
                 "\n" + this.numDocuments +
-                "\n";
+                "\n------------------------------";
 
     }
 
-
 }
+

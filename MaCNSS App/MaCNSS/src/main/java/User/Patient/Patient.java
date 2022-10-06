@@ -50,7 +50,7 @@ public class Patient extends SystemeHelper {
             setId_matricule(email);
             println("Successfully authenticated!");
         } else {
-            println("Failed authentication. Either invalid credentials or patient not existant!");
+            println("Failed authentication. Either invalid credentials or patient not existant !");
         };
     }
 

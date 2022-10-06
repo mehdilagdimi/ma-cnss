@@ -114,6 +114,11 @@ public class ConsultationController {
         }
     }
 
+    public double setRefundsPrice(int id){
+        if (id == 1){
+            return 80;
+        }else return 120;
+    }
     public void closeDBConnection () {
         this.consultationModel.closeDBConnection();
     }

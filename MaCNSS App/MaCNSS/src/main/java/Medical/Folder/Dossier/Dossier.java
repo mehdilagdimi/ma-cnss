@@ -4,6 +4,7 @@ import User.Agent.Agent;
 import User.Patient.PatientController;
 import helper.Emailer.SimpleEmail;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import static helper.SystemeHelper.*;
 import static helper.SystemeHelper.print;
 
 public class Dossier {
+
     public enum StatusDoc{
         EN_ATTENTE("En attente"),
         REFUSE("Refusé"),
@@ -25,7 +27,7 @@ public class Dossier {
             return this.name;
         }
     }
-    
+
     DossierController controller;
     private long code;
     private String date;
@@ -33,6 +35,7 @@ public class Dossier {
     private int nbrConsultation;
     private String status;
 
+    private double sumRefunds;
     // Setters
     public void setCode(long code){
         this.code = code;
@@ -48,6 +51,9 @@ public class Dossier {
     }
     public  void  setStatus(String status){
         this.status = status;
+    }
+    public void setSumRefunds(double sumRefunds) {
+        this.sumRefunds = sumRefunds;
     }
     // Getters
     public int getNbrConsultation() {
@@ -70,6 +76,9 @@ public class Dossier {
         return status;
     }
 
+    public double getSumRefunds() {
+        return sumRefunds;
+    }
     //Constructor
     public Dossier(){
         controller = new DossierController();
@@ -79,9 +88,9 @@ public class Dossier {
         return  "-------------------------------------" +
                 "\n Code  =  " + this.code +
                 "\n Date de creation  =  " + this.date +
-                "\n Nombre de Cinsultation  =  " + this.nbrConsultation +
+                "\n Nombre de Consultation  =  " + this.nbrConsultation +
                 "\n Matricule =  "+ this.matrecule +
-                "\n Etat du dossier  =" + this.status +
+                "\n Etat du dossier  =  " + this.status +
                 "\n------------------------------------";
 
     }
@@ -122,7 +131,7 @@ public class Dossier {
     }
     public void displayPatientAllFoldersSortedByPending(long id_matricule){
 
-       ArrayList<Dossier> dossiers = controller.getAllDossiers();
+       ArrayList<Dossier> dossiers = controller.setDossierList(id_matricule);
        List<Dossier> filteredDossier = Stream.concat(dossiers.stream().filter(dossier -> dossier.status.equals("EN_ATTENTE")), dossiers.stream().filter((dossier) -> dossier.status.equals("REFUSE") || dossier.status.equals("VALIDE"))).toList();
        filteredDossier.forEach(System.out::print);
     }
@@ -134,7 +143,9 @@ public class Dossier {
         //input matricule of patient
         println("Entrer le matricule du patient :");
         long idMatricule = scan().nextLong();
-        controller.setDossierList(idMatricule).forEach(System.out::println);
+        ArrayList<Dossier> dossiers = controller.setDossierList(idMatricule);
+        List<Dossier> pendingDossier = dossiers.stream().filter(dossier -> dossier.status.equals("EN_ATTENTE")).toList();
+        pendingDossier.forEach(System.out::println);
         // get patient email
         PatientController patient = new PatientController();
         String emailPatient = patient.getPatientData(idMatricule).get("email");
