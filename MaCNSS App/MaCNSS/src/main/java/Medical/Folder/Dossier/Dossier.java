@@ -2,6 +2,7 @@ package Medical.Folder.Dossier;
 
 import User.Agent.Agent;
 import User.Patient.PatientController;
+import helper.Emailer.SimpleEmail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,11 @@ import static helper.SystemeHelper.*;
 import static helper.SystemeHelper.print;
 
 public class Dossier {
+    public enum folderstatus {
+        EN_ATTENTE,
+        REFUSE,
+        VALIDE
+    }
     DossierController controller;
     private long code;
     private String date;
@@ -61,12 +67,13 @@ public class Dossier {
     }
     @Override
     public String toString(){
-        return  "\n Code  =  " + this.code +
+        return  "-------------------------------------" +
+                "\n Code  =  " + this.code +
                 "\n Date de creation  =  " + this.date +
                 "\n Nombre de Cinsultation  =  " + this.nbrConsultation +
                 "\n Matricule =  "+ this.matrecule +
                 "\n Etat du dossier  =" + this.status +
-                "\n";
+                "\n------------------------------------";
 
     }
 
@@ -91,21 +98,54 @@ public class Dossier {
         print(dossiers.toString());
     }
 
-    public void displayMatriculeAndStatus(){
+    public void displayAllPendingFolders(){
        ArrayList<Dossier> dossiers = controller.getAllDossiers();
        List<Dossier> filteredDossier = dossiers.stream().filter(dossier -> dossier.getStatus().equals("En attente")).toList();
         println(filteredDossier.toString());
     }
     public void updateDossierStatus(){
+        int choice = 0;
+
         println("------------------ Validation ----------------");
+        //input matricule of patient
         println("Entrer le matricule du patient :");
         long idMatricule = scan().nextLong();
-        println(controller.setDossierList(idMatricule).toString());
+        controller.setDossierList(idMatricule).forEach(System.out::println);
+        // get patient email
+        PatientController patient = new PatientController();
+        String emailPatient = patient.getPatientData(idMatricule).get("email");
+
+
+        // input dossier code
         println("\n-Entrer le code du patient :");
         long codeDossier = scan().nextLong();
+        //display the specific dossier
         Dossier dossier = controller.getDossierByCode(idMatricule,codeDossier);
-
         println(dossier.toString());
+        //Change dossier status
+        println("Changer l'etat du dossier  :");
+        println("1.Validé");
+        println("2.Refusé");
+        choice  = scan().nextInt();
+        String valide = "Bonjour chèr(e) client,<br><br> "
+                +"Nous vous informent que le dossier : <B> "
+                +codeDossier+" </B> a bien était traité et que le dossier est <B>Validé</B>.";
+        String Refuse = "Bonjour chèr(e) client,<br><br> "
+                +"Nous vous informent que le dossier : <B> "
+                +codeDossier+" </B> a bien était traité et que le dossier est malheureusement <B>Refusé</B>.";
+        switch (choice){
+            case 1 : if (controller.updateDossierStatus("VALIDE",codeDossier)){
+                println("Etat De Dossier Modifier !!");
+                // send email to the referred patient
+                SimpleEmail.sendSimpleEmail(emailPatient,"Modification Agent", valide);
+            }else println("Modification erreur");
+                break;
+            case 2: if (controller.updateDossierStatus("REFUSE",codeDossier)) {
+                println("Etat De Dossier Modifier !!");
+                SimpleEmail.sendSimpleEmail(emailPatient,"Modification Agent MACNSS", Refuse);
+            }else println("Modification erreur");
+                break;
+        }
     }
     public static void main(String[] args) {
         Dossier newDossier = new Dossier();

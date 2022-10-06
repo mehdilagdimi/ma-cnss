@@ -77,6 +77,10 @@ public class DossierController {
         return dossiers;
     }
 
+    public boolean updateDossierStatus(String status, long code){
+        return dossierModel.updateDossierStatus(status,code);
+    }
+
     public void addNewDossier(long idMatricule, int nbrConsultation) {
         dossierModel.addNewDossier(idMatricule,nbrConsultation);
     }
