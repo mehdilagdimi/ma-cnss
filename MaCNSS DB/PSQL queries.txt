@@ -1,4 +1,4 @@
-CREATE TYPE folderstatus AS ENUM ('En attente', 'Refusé', 'Validé');
+CREATE TYPE folderstatus AS ENUM ('EN_ATTENT', 'REFUSE', 'VALIDE');
 CREATE TYPE typedocument AS ENUM ('Médicament', 'Analyse', 'Imagerie');
 
 CREATE TABLE patient(
