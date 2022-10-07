@@ -6,6 +6,7 @@ import helper.Emailer.SimpleEmail;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
 
 import static helper.SystemeHelper.*;
 
@@ -20,11 +21,11 @@ public class Agent{
     }
 
     public boolean authenticate(){
+        Scanner scanner = new Scanner(System.in);
         boolean isAllValid = false;
         println("**** \t\t Login Page \t\t ***");
         println("Enter your email :");
-        scan().nextLine();
-        this.email = scan().nextLine();
+        this.email = scanner.nextLine();
         println("Enter your password :");
         this.passw = scan().nextLine();
         if(agentController.authenticate(email, passw)){

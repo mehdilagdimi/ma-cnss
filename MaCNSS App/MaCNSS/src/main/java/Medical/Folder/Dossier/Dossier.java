@@ -135,7 +135,7 @@ public class Dossier {
         println("Entrer le matricule du patient :");
         long idMatricule = scan().nextLong();
         println(controller.setDossierList(idMatricule).toString());
-        println("\n-Entrer le code du patient :");
+        println("\n-Entrer le code du dossier :");
         long codeDossier = scan().nextLong();
         Dossier dossier = controller.getDossierByCode(idMatricule,codeDossier);
 
