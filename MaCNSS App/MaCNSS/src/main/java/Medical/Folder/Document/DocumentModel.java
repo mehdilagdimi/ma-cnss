@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import static helper.SystemeHelper.println;
+
 public class DocumentModel {
     private String table;
     protected DBConnection db = new DBConnection();
@@ -64,6 +66,7 @@ public class DocumentModel {
         return resultSet;
     }
     public ResultSet getDocumentWithName (String table, String nom) throws  SQLException{
+        println(table+" !!! "+nom);
         ResultSet result = null;
         String query = "SELECT * FROM " + table + " WHERE nom = ? LIMIT 1";
         if (db.prepare(query)) {

@@ -110,8 +110,8 @@ public class DossierModel {
         int count = 0;
         String query = "UPDATE dossier SET totalRefunds = ? WHERE code = ?";
             if (db.prepare(query)) {
-                db.setParam(1, codeDossier);
-                db.setParam(2, totalRefunds);
+                db.setParam(1, totalRefunds);
+                db.setParam(2, codeDossier);
 
             if (db.executeUpdate() != 0){
                 println("Dossier Update Succes");

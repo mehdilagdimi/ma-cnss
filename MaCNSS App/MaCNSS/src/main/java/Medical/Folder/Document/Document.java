@@ -119,11 +119,12 @@ public class Document {
         setType(TypeDoc.values()[scanner.nextInt()].toString());
 
         println("Entrer le nom du médicament/examen/analyse':");
+        scanner.nextLine();
         String nomDocument = scanner.nextLine();
         setNom(nomDocument);
-        println(nomDocument);
         //create document
         setId(this.controller.createDocument(idConsultation, this.date, this.montantPaye, this.type));
+        println(getType()+" "+getNom()+" here!!");
         setPercentage(this.controller.getRefundPercentage(getType(), getNom()));
         if(this.getId() != -1){
             println("Document added successfully");
