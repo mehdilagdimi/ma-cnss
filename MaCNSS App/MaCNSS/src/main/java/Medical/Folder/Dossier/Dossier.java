@@ -87,6 +87,7 @@ public class Dossier {
                 "\n Nombre de Consultation  =  " + this.nbrConsultation +
                 "\n Matricule =  "+ this.matrecule +
                 "\n Etat du dossier  =  " + this.status +
+                "\n Remboursement du dossier = " + this.totalRefund +
                 "\n------------------------------------";
 
     }
@@ -159,7 +160,7 @@ public class Dossier {
 
 
         // input dossier code
-        println("\n-Entrer le code du patient :");
+        println("\n-Entrer le code du dossier :");
         long codeDossier = scan().nextLong();
         //display the specific dossier
         Dossier dossier = controller.getDossierByCode(idMatricule,codeDossier);
@@ -174,7 +175,8 @@ public class Dossier {
                 +codeDossier+" </B> a bien était traité et que le dossier est <B>Validé</B>.";
         String Refuse = "Bonjour chèr(e) client,<br><br> "
                 +"Nous vous informent que le dossier : <B> "
-                +codeDossier+" </B> a bien était traité et que le dossier est malheureusement <B>Refusé</B>.";
+                +codeDossier+" </B> a bien était traité et que le dossier est malheureusement <B>Refusé</B>."
+                + " <B>Total de remboursement</B> : " + dossier.totalRefund;
         switch (choice){
             case 1 : if (controller.updateDossierStatus("VALIDE",codeDossier)){
                 println("Etat De Dossier Modifier !!");
