@@ -51,9 +51,9 @@ public class ConsultationModel {
         return result;
     }
 
-    public boolean addConsultation (long codeDossier, int id_specialite, LocalDate date, boolean isConjoint, int montantPaye, int numDocuments) {
-        boolean success = false;
-        String query = "INSERT INTO " + table + " (code_dossier,  id_specialite, date, is_conjoint, nbr_documents, montant_paye) VALUES (?, ?, ?, ?, ?, ?)";
+    public ResultSet addConsultation (long codeDossier, int id_specialite, LocalDate date, boolean isConjoint, int montantPaye, int numDocuments) throws SQLException{
+        ResultSet result = null;
+        String query = "INSERT INTO " + table + " (code_dossier,  id_specialite, date, is_conjoint, nbr_documents, montant_paye) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
         if(db.prepare(query)){
             db.setParam(1, codeDossier);
             db.setParam(2, id_specialite);
@@ -61,11 +61,12 @@ public class ConsultationModel {
             db.setParam(4, isConjoint);
             db.setParam(5, numDocuments);
             db.setParam(6, montantPaye);
-            if(db.executeUpdate() > 0){
-                success = true;
+            result = db.execute();
+            if(result.next()){
+                return result;
             };
         }
-        return success;
+        return result;
     }
 
     public ResultSet getAllSpecialites() {

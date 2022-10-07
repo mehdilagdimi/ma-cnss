@@ -1,5 +1,6 @@
 package Medical.Folder.Dossier;
 
+import Medical.Folder.Consultation.Consultation;
 import User.Agent.Agent;
 import User.Patient.PatientController;
 import helper.Emailer.SimpleEmail;
@@ -16,26 +17,21 @@ import static helper.SystemeHelper.print;
 public class Dossier {
 
     public enum StatusDoc{
-        EN_ATTENTE("En attente"),
-        REFUSE("Refusé"),
-        VALIDE("Validé");
-        private String name;
-        StatusDoc(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return this.name;
-        }
+        EN_ATTENTE,
+        REFUSE,
+        VALIDE;
     }
 
-    DossierController controller;
+    public DossierController controller;
     private long code;
     private String date;
     private long matrecule;
     private int nbrConsultation;
     private String status;
-
     private double sumRefunds;
+    public float totalRefund = 0;
+
+
     // Setters
     public void setCode(long code){
         this.code = code;
@@ -96,17 +92,28 @@ public class Dossier {
     }
 
     public void addNewDossier(){
+        long codeDossier;
         PatientController patientController = new PatientController();
         println("Entrer le matricule du patient :");
         long idMatricule = scan().nextLong();
         if (patientController.checkPatientIsAvailable(idMatricule)){
+            setMatrecule(idMatricule);
             println("Entrer le nombre des consultations joinier");
-            int nbrConsultation = scan().nextInt();
-            controller.addNewDossier( idMatricule, nbrConsultation);
+            this.nbrConsultation = scan().nextInt();
+            codeDossier = controller.addNewDossier( idMatricule, this.nbrConsultation);
+            if(codeDossier != -1){
+                setCodeDossier(codeDossier);
+            } else {
+                println("Erreur, le dossier n'était pas ajouté");
+            }
         }else{
             println("Erreur Matrecule introuvable");
         }
 
+    }
+
+    public void setCodeDossier (long codeDossier) {
+        this.code = codeDossier;
     }
     public void  displayDossiers(){
         println("\n -------------   Dossiers  -------------");
@@ -130,7 +137,6 @@ public class Dossier {
         }
     }
     public void displayPatientAllFoldersSortedByPending(long id_matricule){
-
        ArrayList<Dossier> dossiers = controller.setDossierList(id_matricule);
        List<Dossier> filteredDossier = Stream.concat(dossiers.stream().filter(dossier -> dossier.status.equals("EN_ATTENTE")), dossiers.stream().filter((dossier) -> dossier.status.equals("REFUSE") || dossier.status.equals("VALIDE"))).toList();
        filteredDossier.forEach(System.out::print);
@@ -182,9 +188,10 @@ public class Dossier {
                 break;
         }
     }
-    public static void main(String[] args) {
-        Dossier newDossier = new Dossier();
-        newDossier.updateDossierStatus();
+
+    public void getProcessResult(List<Consultation> listConsultations){
+        controller.processDossier(this, listConsultations);
+
     }
 
 }

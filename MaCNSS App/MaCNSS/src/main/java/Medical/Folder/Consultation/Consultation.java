@@ -1,5 +1,6 @@
 package Medical.Folder.Consultation;
 
+import Medical.Folder.Document.Document;
 import helper.Specialite;
 
 import java.time.LocalDate;
@@ -12,9 +13,13 @@ import java.util.Map;
 import static helper.SystemeHelper.*;
 
 public class Consultation {
+    public ConsultationController getController() {
+        return controller;
+    }
+
     private final ConsultationController controller;
 
-    private int id;
+    private long id;
     private long codeDossier;
     private LocalDate date;
     private int idSpecialite;
@@ -23,8 +28,14 @@ public class Consultation {
     private int numDocuments;
     private double sumConsultationRefund;
 
+
+
+    private List<Document> listDocuments;
+
+
     // Getters
-    public int getId() {
+
+    public long getId(){
         return this.id;
     }
 
@@ -48,9 +59,11 @@ public class Consultation {
         return sumConsultationRefund;
     }
 
-
+    public LocalDate getDate() {
+        return date;
+    }
     // Setters
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -74,6 +87,7 @@ public class Consultation {
         this.numDocuments = numDocuments;
     }
 
+
     public Consultation() {
         this.controller = new ConsultationController();
     }
@@ -89,10 +103,16 @@ public class Consultation {
         ArrayList<Consultation> consultations = controller.setConsultationByCode(code);
         print(consultations.toString());
     }
+    public void setListDocuments(List<Document> listDocuments) {
+        this.listDocuments = listDocuments;
+    }
+
+
 
     public void addConsultation(long codeDossier) {
         println("-------------   Adding consultation data  -------------");
         println("Entrér la date de consultation :  (ex : 26/07/2022)");
+        scan().nextLine();
         String dateStr = scan().nextLine();
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy" )
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -104,7 +124,7 @@ public class Consultation {
         } else {
             this.isConjoint = false;
         }
-        ;
+
 
         println("Entrer le montant payé (DHs):");
         this.montantPaye = scan().nextInt();
@@ -113,27 +133,28 @@ public class Consultation {
         this.numDocuments = scan().nextInt();
 
         //get specialities from DB
-        println("Entrer le numéro du spécialité :");
+        println("Spécialité ? ");
         List<Specialite> specialites = this.controller.getAllSpecialites();
         for (Specialite specialite : specialites) {
             println("\t" + String.valueOf(specialite.id) + "- " + specialite.nom);
         }
+        scan().nextLine();
         this.idSpecialite = scan().nextInt();
-        setSumConsultationRefund(controller.setRefundsPrice(this.idSpecialite));
-        if (this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments)) {
-            println("Consultation added successfully");
-        } else {
-            println("Failed adding consultation");
-        }
-        ;
-    }
+//        setSumConsultationRefund(controller.setRefundsPrice(this.idSpecialite));
+//        if (this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments)) {
 
-//    public void getAllspecialiteTest(){
-//        List<Specialite> specialites = this.controller.getAllSpecialites();
-//        for(Specialite specialite : specialites){
-//            println(String.valueOf(specialite.id) + "\t" + specialite.nom);
-//        }
-//    }
+            //add consu and set the id for the object
+            setId(this.controller.createConsultation(codeDossier, this.idSpecialite, this.date, this.isConjoint, this.montantPaye, this.numDocuments));
+
+            if (this.id != -1) {
+                println("Consultation added successfully");
+            } else {
+                println("Failed adding consultation");
+            }
+        }
+
+
+
 
     @Override
     public String toString() {
@@ -147,5 +168,8 @@ public class Consultation {
 
     }
 
+    public List<Document> getListDocuments() {
+        return listDocuments;
+    }
 }
 

@@ -3,6 +3,7 @@ package Medical.Folder.Dossier;
 import Database.DBConnection;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static helper.SystemeHelper.println;
 
@@ -81,20 +82,48 @@ public class DossierModel {
         db.closeQueryOperations();
     }
 
-    public void addNewDossier(long idMatricule, int nbrConsultation) {
-        String query = "INSERT INTO dossier (id_matricule_patient , nbr_consultation) values (?,?)";
-        if (db.prepare(query)){
-            db.setParam(1,idMatricule);
-            db.setParam(2,nbrConsultation);
-            if (db.executeUpdate() != 0){
-                println("Dossier ajouter avec succes");
-            }else {
-                println("Ajout échouer");
+    public long addNewDossier(long idMatricule, int nbrConsultation) {
+        long codeDossier = -1;
+        String query = "INSERT INTO dossier (id_matricule_patient , nbr_consultation) values (?,?) RETURNING code";
+        try {
+            if (db.prepare(query)) {
+                db.setParam(1, idMatricule);
+                db.setParam(2, nbrConsultation);
+                ResultSet result = db.execute();
+                if (result.next()) {
+                    println("Dossier ajouter avec succes");
+                    codeDossier = result.getLong("code");
+//            if (db.executeUpdate() != 0){
+//
+                } else {
+                    println("Ajout échouer");
+                }
+            } else {
+                println("Execution echoué !!");
             }
-        }else {
-            println("Execution echoué !!");
+        } catch (SQLException e){
+            e.printStackTrace();
         }
+        return codeDossier;
     }
+     public int saveTotalRefunds(long codeDossier, float totalRefunds) {
+        int count = 0;
+        String query = "UPDATE dossier SET totalRefunds = ? WHERE code = ?";
+            if (db.prepare(query)) {
+                db.setParam(1, codeDossier);
+                db.setParam(2, totalRefunds);
+
+            if (db.executeUpdate() != 0){
+                println("Dossier Update Succes");
+            } else {
+                println("Dossier Update failed");
+            }
+            } else {
+                println("Execution echoué !!");
+            }
+        return count;
+    }
+
     public boolean updateDossierStatus(String status, long code){
         String query = "UPDATE dossier SET etat = ?::folderstatus  WHERE code = ?";
         if (db.prepare(query)){
@@ -112,4 +141,7 @@ public class DossierModel {
         }
         return false;
     }
+
+
+
 }
