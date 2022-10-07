@@ -97,14 +97,14 @@ public class DossierController {
     public void processDossier(Dossier dossier, List<Consultation> listConsultations){        //Map containing valid consultations (key is TRUE in Map)  and non valid consultations (key is FALSE in Map)
         Map<Boolean, List<Consultation>> mapOfValidAndNonValidConsultations =  listConsultations.stream().collect(Collectors.groupingBy((consultation) -> consultation.getController().checkDateValidity(consultation.getDate())));
 
-        println("printing map of consultations : " + mapOfValidAndNonValidConsultations.toString());
+//        println("printing map of consultations : " + mapOfValidAndNonValidConsultations.toString());
 
         Map<Boolean, List<Document>> mapOfRefundableAndNotDocuments;
 
         for(Consultation validConsultation : mapOfValidAndNonValidConsultations.get(true)){
             mapOfRefundableAndNotDocuments =  validConsultation.getListDocuments().stream().collect(Collectors.groupingBy((document -> document.getController().checkIfRefundable(document.getType(), document.getNom()))));
             dossier.totalRefund += validConsultation.getController().setRefundsPrice(validConsultation.getIdSpecialite());
-            println("printing map of documents :" + mapOfRefundableAndNotDocuments.toString());
+//            println("printing map of documents :" + mapOfRefundableAndNotDocuments.toString());
             if(mapOfRefundableAndNotDocuments.get(true) != null){
                 for(Document document : mapOfRefundableAndNotDocuments.get(true)){
                     dossier.totalRefund += document.getMontantPaye() * document.getPercentage() / 100;
