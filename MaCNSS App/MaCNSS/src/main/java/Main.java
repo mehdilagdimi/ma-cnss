@@ -46,6 +46,7 @@ public class Main {
     //Agent workflow
     private static void agentWorkflow () {
         Scanner scanner = new Scanner(System.in);
+        boolean repeat = true;
         Agent agent = new Agent();
         Dossier dossier = new Dossier();
         List<Consultation> listConsultations;
@@ -54,37 +55,41 @@ public class Main {
             return;
         };
 
-        println("\t --- Agent Menu ---");
-        println("1 - \t Ajouter nouveau dossier :");
-        println("2 - \t Vérifier dossiers existants :");
-        println("3 - \t Exit :");
+        while (repeat) {
+            println("\t --- Agent Menu ---");
+            println("1 - \t Ajouter nouveau dossier :");
+            println("2 - \t Vérifier dossiers existants :");
+            println("3 - \t Exit :");
 
-        switch (scanner.nextInt()){
-            case 1 :
-                dossier.addNewDossier();
-                listConsultations = populateDossier(dossier.getNbrConsultation(), dossier.getCode());
+            switch (scanner.nextInt()) {
+                case 1:
+                    dossier.addNewDossier();
+                    listConsultations = populateDossier(dossier.getNbrConsultation(), dossier.getCode());
 
-                //Process medical folder and display result
-                dossier.getProcessResult(listConsultations);
-                println("TOTAL Refund : " + dossier.totalRefund);
-                Map<String, String> patientMap = patient.patientController.getPatientData(dossier.getMatrecule());
+                    //Process medical folder and display result
+                    dossier.getProcessResult(listConsultations);
+                    println("TOTAL Refund : " + dossier.totalRefund);
+                    Map<String, String> patientMap = patient.patientController.getPatientData(dossier.getMatrecule());
 
-                println("\t 1 - Valider le dossier :");
-                println("\t 2 - Garder le dossier en attente :");
-                switch (scanner.nextInt()){
-                    case 1 :
-                        SimpleEmail.sendSimpleEmail(patientMap.get("email"), "Total du remboursement", "<h2> Total du remboursement : <h2><br>" + dossier.totalRefund);
-                        println("\t 1 - Le dossier est validé! Un email à été envoyé au patient! :");
-                        break;
-                    case 2 :
-                        break;
-                }
-                break;
-            case 2 :
-                dossier.displayPatientAllPendingFolders();
-                break;
-            case 3 :
-                return;
+                    println("\t 1 - Valider le dossier :");
+                    println("\t 2 - Garder le dossier en attente :");
+                    switch (scanner.nextInt()) {
+                        case 1:
+                            SimpleEmail.sendSimpleEmail(patientMap.get("email"), "Total du remboursement", "<h2> Total du remboursement : <h2>" + dossier.totalRefund + "DH");
+                            println("\t 1 - Le dossier est validé! Un email à été envoyé au patient! :");
+                            break;
+                        case 2:
+                            SimpleEmail.sendSimpleEmail(patientMap.get("email"), "Etat de dossier MaCNSS", "<h3> Votre dossier est en cours d'attente merci pour votre compéhension! </h3>");
+                            break;
+                    }
+                    break;
+                case 2:
+                    dossier.displayPatientAllPendingFolders();
+                    break;
+                case 3:
+                    repeat = false;
+                    break;
+            }
         }
     }
     
