@@ -76,6 +76,7 @@ public class DossierController {
                 dossiers.setMatrecule(result.getInt("id_matricule_patient"));
                 dossiers.setNbrConsultation(result.getInt("nbr_consultation"));
                 dossiers.setStatus(result.getString("etat"));
+                dossiers.totalRefund =  result.getFloat("totalrefunds");
             }
         }catch (SQLException e){
             e.printStackTrace();
