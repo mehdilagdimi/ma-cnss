@@ -100,14 +100,15 @@ public class DossierController {
 //        println("printing map of consultations : " + mapOfValidAndNonValidConsultations.toString());
 
         Map<Boolean, List<Document>> mapOfRefundableAndNotDocuments;
-
-        for(Consultation validConsultation : mapOfValidAndNonValidConsultations.get(true)){
-            mapOfRefundableAndNotDocuments =  validConsultation.getListDocuments().stream().collect(Collectors.groupingBy((document -> document.getController().checkIfRefundable(document.getType(), document.getNom()))));
-            dossier.totalRefund += validConsultation.getController().setRefundsPrice(validConsultation.getIdSpecialite());
+        if(mapOfValidAndNonValidConsultations.get(true) != null) {
+            for (Consultation validConsultation : mapOfValidAndNonValidConsultations.get(true)) {
+                mapOfRefundableAndNotDocuments = validConsultation.getListDocuments().stream().collect(Collectors.groupingBy((document -> document.getController().checkIfRefundable(document.getType(), document.getNom()))));
+                dossier.totalRefund += validConsultation.getController().setRefundsPrice(validConsultation.getIdSpecialite());
 //            println("printing map of documents :" + mapOfRefundableAndNotDocuments.toString());
-            if(mapOfRefundableAndNotDocuments.get(true) != null){
-                for(Document document : mapOfRefundableAndNotDocuments.get(true)){
-                    dossier.totalRefund += document.getMontantPaye() * document.getPercentage() / 100;
+                if (mapOfRefundableAndNotDocuments.get(true) != null) {
+                    for (Document document : mapOfRefundableAndNotDocuments.get(true)) {
+                        dossier.totalRefund += document.getMontantPaye() * document.getPercentage() / 100;
+                    }
                 }
             }
         }

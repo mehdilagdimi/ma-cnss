@@ -87,6 +87,7 @@ public class Dossier {
                 "\n Nombre de Consultation  =  " + this.nbrConsultation +
                 "\n Matricule =  "+ this.matrecule +
                 "\n Etat du dossier  =  " + this.status +
+                "\n Remboursement du dossier = " + this.totalRefund +
                 "\n------------------------------------";
 
     }
