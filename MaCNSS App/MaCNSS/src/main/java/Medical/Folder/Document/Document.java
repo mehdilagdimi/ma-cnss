@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static helper.SystemeHelper.*;
 import static helper.SystemeHelper.print;
@@ -21,14 +22,26 @@ public class Document {
     }
 
     private final DocumentController controller;
-    private int id;
+    private long id;
     private LocalDate date;
     private int idConsultation;
     private float montantPaye;
     private String type;
+
+    public float percentage;
+
+
+    private String nom;
     // Getters
-    public int getId() {
+    public String getNom() {
+        return nom;
+    }
+    public long getId() {
         return id;
+    }
+
+    public DocumentController getController() {
+        return controller;
     }
 
     public LocalDate getDate() {
@@ -38,6 +51,9 @@ public class Document {
     public int getIdConsultation() {
         return idConsultation;
     }
+    public float getPercentage() {
+        return percentage;
+    }
 
     public float getMontantPaye() {
         return montantPaye;
@@ -45,6 +61,7 @@ public class Document {
     public  String getType(){
         return this.type;
     }
+
     // Setters
     public void setMontantPaye(float montantPaye) {
         this.montantPaye = montantPaye;
@@ -57,14 +74,19 @@ public class Document {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    public void setId(int id) {
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    public void setId(long id) {
         this.id = id;
     }
     public void setType(String  type) {
         this.type = type;
     }
     // Type Document Enum
+    public void setPercentage(float percentage) {
+        this.percentage = percentage;
+    }
 
 
     public Document(){
@@ -72,24 +94,20 @@ public class Document {
     }
 
 
-    public static void main(String[] args) {
-        Document test = new Document();
-//        test.displayDocuments();
-        test.addDocument(1);
-    }
+
 
 
     public void addDocument(long idConsultation) {
-
+        Scanner scanner = new Scanner(System.in);
         println("-------------   Adding document data  -------------");
         println("Entrer la date du document :  (ex : 26/07/2022)");
-        scan().nextLine();
-        String dateStr = scan().nextLine();
+
+        String dateStr = scanner.next();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.date = LocalDate.parse(dateStr, formatter);
 
         println("Entrer le montant payé (DHs):");
-        this.montantPaye = scan().nextFloat();
+        this.montantPaye = scanner.nextFloat();
 
         //get specialities from DB
         println("Entrer le numéro du type de consultation :");
@@ -98,13 +116,18 @@ public class Document {
             println("\t" + i + "- " + type);
             i++;
         }
-        this.type = TypeDoc.values()[scan().nextInt()].toString();
+        setType(TypeDoc.values()[scanner.nextInt()].toString());
 
+        println("Entrer le nom du médicament/examen/analyse':");
+        scanner.nextLine();
+        setNom(scanner.nextLine());
         //create document
-        if(this.controller.createDocument(idConsultation, this.date, this.montantPaye, this.type)){
-            println("Consultation added successfully");
+        setId(this.controller.createDocument(idConsultation, this.date, this.montantPaye, this.type));
+        setPercentage(this.controller.getRefundPercentage(getType(), getNom()));
+        if(this.getId() != -1){
+            println("Document added successfully");
         } else {
-            println("Failed adding consultation");
+            println("Failed adding document");
         };
     }
 

@@ -18,20 +18,19 @@ public class Consultation {
     private long id;
     private long codeDossier;
     private LocalDate date;
+
+
+
     private int idSpecialite;
     private int montantPaye;
     private boolean isConjoint;
     private int numDocuments;
 
-    public void setListDocuments(List<Document> listDocuments) {
-        this.listDocuments = listDocuments;
-    }
 
-    public List<Document> getListDocuments() {
-        return listDocuments;
-    }
 
     private List<Document> listDocuments;
+
+
     // Getters
     public long getId(){
         return this.id;
@@ -45,9 +44,19 @@ public class Consultation {
     public int getIdSpecialite(){
         return this.idSpecialite;
     }
+    public LocalDate getDate() {
+        return date;
+    }
     public int getNumDocuments(){
         return this.numDocuments;
     }
+    public ConsultationController getController() {
+        return controller;
+    }
+    public List<Document> getListDocuments() {
+        return listDocuments;
+    }
+
     // Setters
     public void setId(long id){
         this.id = id;
@@ -67,9 +76,14 @@ public class Consultation {
     public void setNumDocuments(int numDocuments){
         this.numDocuments = numDocuments;
     }
+    public void setListDocuments(List<Document> listDocuments) {
+        this.listDocuments = listDocuments;
+    }
     public Consultation(){
         this.controller = new ConsultationController();
     }
+
+
 
     public void  displayConsultation(){
        println("\n -------------   Consultation -------------");
@@ -120,12 +134,7 @@ public class Consultation {
         };
     }
 
-//    public void getAllspecialiteTest(){
-//        List<Specialite> specialites = this.controller.getAllSpecialites();
-//        for(Specialite specialite : specialites){
-//            println(String.valueOf(specialite.id) + "\t" + specialite.nom);
-//        }
-//    }
+
 
     @Override
     public String toString(){

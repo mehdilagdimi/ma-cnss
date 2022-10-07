@@ -1,5 +1,6 @@
 package Medical.Folder.Dossier;
 
+import Medical.Folder.Consultation.Consultation;
 import User.Agent.Agent;
 import User.Patient.PatientController;
 
@@ -13,16 +14,9 @@ import static helper.SystemeHelper.print;
 
 public class Dossier {
     public enum StatusDoc{
-        EN_ATTENTE("En attente"),
-        REFUSE("Refusé"),
-        VALIDE("Validé");
-        private String name;
-        StatusDoc(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return this.name;
-        }
+        EN_ATTENTE,
+        REFUSE,
+        VALIDE;
     }
 
     DossierController controller;
@@ -31,6 +25,8 @@ public class Dossier {
     private long matrecule;
     private int nbrConsultation;
     private String status;
+
+    public float totalRefund = 0;
 
     // Setters
     public void setCode(long code){
@@ -144,8 +140,9 @@ public class Dossier {
 
         println(dossier.toString());
     }
-    public static void main(String[] args) {
-        Dossier newDossier = new Dossier();
-        newDossier.updateDossierStatus();
+
+    public void getProcessResult(List<Consultation> listConsultations){
+        controller.processDossier(this, listConsultations);
+
     }
 }

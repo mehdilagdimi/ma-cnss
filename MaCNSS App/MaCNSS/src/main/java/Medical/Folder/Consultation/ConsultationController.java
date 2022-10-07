@@ -6,6 +6,7 @@ import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -119,6 +120,14 @@ public class ConsultationController {
             consultationModel.closeQuery();
             return listSpecialite;
         }
+    }
+
+    public boolean checkDateValidity(LocalDate date) {
+        int daysOfValidity = 60;
+        if(date.until(LocalDate.now(), ChronoUnit.DAYS) > daysOfValidity){
+            return true;
+        }
+        return false;
     }
 
     public void closeDBConnection () {
