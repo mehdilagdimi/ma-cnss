@@ -108,6 +108,10 @@ public class DossierController {
                 }
             }
         }
+        dossier.controller.saveTotalRefunds(dossier.getCode(), dossier.totalRefund);
+    }
 
+    public void saveTotalRefunds(long code, float totalRefunds){
+        dossierModel.saveTotalRefunds(code, totalRefunds);
     }
 }

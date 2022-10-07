@@ -19,7 +19,7 @@ public class Dossier {
         VALIDE;
     }
 
-    DossierController controller;
+    public DossierController controller;
     private long code;
     private String date;
     private long matrecule;
@@ -86,6 +86,7 @@ public class Dossier {
         println("Entrer le matricule du patient :");
         long idMatricule = scan().nextLong();
         if (patientController.checkPatientIsAvailable(idMatricule)){
+            setMatrecule(idMatricule);
             println("Entrer le nombre des consultations joinier");
             this.nbrConsultation = scan().nextInt();
             codeDossier = controller.addNewDossier( idMatricule, this.nbrConsultation);

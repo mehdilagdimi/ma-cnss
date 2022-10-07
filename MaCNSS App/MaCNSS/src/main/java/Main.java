@@ -3,10 +3,14 @@ import Medical.Folder.Document.Document;
 import Medical.Folder.Dossier.Dossier;
 import User.Agent.Agent;
 import User.Patient.Patient;
+import helper.Emailer.EmailHelper;
+import helper.Emailer.SimpleEmail;
 import scala.collection.immutable.Stream;
+import scala.sys.process.ProcessBuilderImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static helper.SystemeHelper.*;
 
@@ -43,7 +47,7 @@ public class Main {
         Agent agent = new Agent();
         Dossier dossier = new Dossier();
         List<Consultation> listConsultations = new ArrayList<Consultation>();
-
+        Patient patient = new Patient();
         if(!agent.authenticate()){
             return;
         };
@@ -61,6 +65,8 @@ public class Main {
                 //Process medical folder and display result
                 dossier.getProcessResult(listConsultations);
                 println("TOTAL Refund : " + dossier.totalRefund);
+                Map<String, String> patientMap = patient.patientController.getPatientData(dossier.getMatrecule());
+                SimpleEmail.sendSimpleEmail(patientMap.get("email"), "<h3>Total du remboursement </h3>", String.valueOf(dossier.totalRefund));
                 break;
             case 2 :
                 dossier.displayPatientAllPendingFolders();
