@@ -103,7 +103,7 @@ public class DossierController {
 
         for(Consultation validConsultation : mapOfValidAndNonValidConsultations.get(true)){
             mapOfRefundableAndNotDocuments =  validConsultation.getListDocuments().stream().collect(Collectors.groupingBy((document -> document.getController().checkIfRefundable(document.getType(), document.getNom()))));
-
+            dossier.totalRefund += validConsultation.getController().setRefundsPrice(validConsultation.getIdSpecialite());
             println("printing map of documents :" + mapOfRefundableAndNotDocuments.toString());
             if(mapOfRefundableAndNotDocuments.get(true) != null){
                 for(Document document : mapOfRefundableAndNotDocuments.get(true)){

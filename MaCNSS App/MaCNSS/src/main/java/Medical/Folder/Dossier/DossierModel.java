@@ -108,7 +108,7 @@ public class DossierModel {
     }
      public int saveTotalRefunds(long codeDossier, float totalRefunds) {
         int count = 0;
-        println("CODE DOSSIER A MIS A JOUR :" + String.valueOf(codeDossier));
+        println("DOSSIER DE CODE "+ String.valueOf(codeDossier) + "A ETE MIS A JOUR :");
         String query = "UPDATE dossier SET totalrefunds = ? WHERE code = ?";
             if (db.prepare(query)) {
                 db.setParam(1, totalRefunds);

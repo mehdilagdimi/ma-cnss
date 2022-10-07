@@ -4,9 +4,9 @@ public class Config {
 
 
     private final static String URL = "jdbc:postgresql://localhost:5432/macnss";
-    private final static String USER = "postgres";
+    private final static String USER = "mehdilagdimi";
     //setup env variable for later use
-    private final static String PASSWORD = "admin";
+    private final static String PASSWORD = "1234";
 
 
     public static String getUrl() {

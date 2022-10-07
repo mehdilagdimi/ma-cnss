@@ -66,7 +66,6 @@ public class DocumentModel {
         return resultSet;
     }
     public ResultSet getDocumentWithName (String table, String nom) throws  SQLException{
-        println(table+" !!! "+nom);
         ResultSet result = null;
         String query = "SELECT * FROM " + table + " WHERE nom = ? LIMIT 1";
         if (db.prepare(query)) {

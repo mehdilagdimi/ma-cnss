@@ -122,7 +122,7 @@ public class ConsultationController {
         }
     }
 
-    public double setRefundsPrice(int id){
+    public double setRefundsPrice(long id){
         if (id == 1){
             return 80;
         }else return 120;
@@ -130,7 +130,7 @@ public class ConsultationController {
 
     public boolean checkDateValidity(LocalDate date) {
         int daysOfValidity = 60;
-        if(date.until(LocalDate.now(), ChronoUnit.DAYS) > daysOfValidity){
+        if(date.until(LocalDate.now(), ChronoUnit.DAYS) < daysOfValidity){
             return true;
         }
         return false;

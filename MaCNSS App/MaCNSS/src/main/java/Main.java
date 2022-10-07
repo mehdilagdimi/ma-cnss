@@ -75,8 +75,11 @@ public class Main {
                     println("\t 2 - Garder le dossier en attente :");
                     switch (scanner.nextInt()) {
                         case 1:
+                            //update dossier status to VALIDE
+                            dossier.controller.updateDossierStatus("VALIDE", dossier.getCode());
+                            println("\tLe dossier est validé! Un email à été envoyé au patient! :");
+                            //Send email
                             SimpleEmail.sendSimpleEmail(patientMap.get("email"), "Total du remboursement", "<h2> Total du remboursement : <h2>" + dossier.totalRefund + "DH");
-                            println("\t 1 - Le dossier est validé! Un email à été envoyé au patient! :");
                             break;
                         case 2:
                             SimpleEmail.sendSimpleEmail(patientMap.get("email"), "Etat de dossier MaCNSS", "<h3> Votre dossier est en cours d'attente merci pour votre compéhension! </h3>");
@@ -84,7 +87,8 @@ public class Main {
                     }
                     break;
                 case 2:
-                    dossier.displayPatientAllPendingFolders();
+//                    dossier.displayPatientAllPendingFolders();
+                    dossier.updateDossierStatus();
                     break;
                 case 3:
                     repeat = false;
