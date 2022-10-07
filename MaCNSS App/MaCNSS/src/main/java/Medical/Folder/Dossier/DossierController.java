@@ -85,13 +85,16 @@ public class DossierController {
         return dossiers;
     }
 
+    public boolean updateDossierStatus(String status, long code){
+        return dossierModel.updateDossierStatus(status,code);
+    }
+
     public long addNewDossier(long idMatricule, int nbrConsultation) {
         return dossierModel.addNewDossier(idMatricule,nbrConsultation);
 
     }
 
-    public void processDossier(Dossier dossier, List<Consultation> listConsultations){
-        //Map containing valid consultations (key is TRUE in Map)  and non valid consultations (key is FALSE in Map)
+    public void processDossier(Dossier dossier, List<Consultation> listConsultations){        //Map containing valid consultations (key is TRUE in Map)  and non valid consultations (key is FALSE in Map)
         Map<Boolean, List<Consultation>> mapOfValidAndNonValidConsultations =  listConsultations.stream().collect(Collectors.groupingBy((consultation) -> consultation.getController().checkDateValidity(consultation.getDate())));
 
         println("printing map of consultations : " + mapOfValidAndNonValidConsultations.toString());

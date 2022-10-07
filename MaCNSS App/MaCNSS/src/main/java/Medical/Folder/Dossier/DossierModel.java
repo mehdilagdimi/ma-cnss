@@ -124,5 +124,24 @@ public class DossierModel {
         return count;
     }
 
+    public boolean updateDossierStatus(String status, long code){
+        String query = "UPDATE dossier SET etat = ?::folderstatus  WHERE code = ?";
+        if (db.prepare(query)){
+            db.setParam(1,status);
+            db.setParam(2,code);
+            if (db.executeUpdate() != 0){
+                println("Dossier modifier avec succes");
+                return true;
+            }else {
+                println("Modification échouer");
+                return false;
+            }
+        }else {
+            println("Execution echoué !!");
+        }
+        return false;
+    }
+
+
 
 }
