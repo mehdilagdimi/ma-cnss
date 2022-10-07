@@ -16,7 +16,7 @@ public class Patient extends SystemeHelper {
 
     Scanner scanner = new Scanner(System.in);
 
-    PatientController patientController;
+    public PatientController patientController;
 
     public Patient () {
         patientController = new PatientController();

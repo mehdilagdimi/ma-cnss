@@ -3,10 +3,14 @@ import Medical.Folder.Document.Document;
 import Medical.Folder.Dossier.Dossier;
 import User.Agent.Agent;
 import User.Patient.Patient;
+import helper.Emailer.EmailHelper;
+import helper.Emailer.SimpleEmail;
 import scala.collection.immutable.Stream;
+import scala.sys.process.ProcessBuilderImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static helper.SystemeHelper.*;
 
@@ -43,7 +47,7 @@ public class Main {
         Agent agent = new Agent();
         Dossier dossier = new Dossier();
         List<Consultation> listConsultations = new ArrayList<Consultation>();
-
+        Patient patient = new Patient();
         if(!agent.authenticate()){
             return;
         };
@@ -57,8 +61,12 @@ public class Main {
             case 1 :
                 dossier.addNewDossier();
                 listConsultations = populateDossier(dossier.getNbrConsultation(), dossier.getCode());
-                println("TESTING CONSULTATIONS IF ADDED OR NOT: ");
-                listConsultations.forEach(System.out::print);
+
+                //Process medical folder and display result
+                dossier.getProcessResult(listConsultations);
+                println("TOTAL Refund : " + dossier.totalRefund);
+                Map<String, String> patientMap = patient.patientController.getPatientData(dossier.getMatrecule());
+                SimpleEmail.sendSimpleEmail(patientMap.get("email"), "<h3>Total du remboursement </h3>", String.valueOf(dossier.totalRefund));
                 break;
             case 2 :
                 dossier.displayPatientAllPendingFolders();
@@ -67,12 +75,11 @@ public class Main {
                 return;
         }
     }
-
-
+    
 
     public static List<Consultation> populateDossier (int nbrConsultation, long codeDossier) {
         List<Consultation> listConsultations = new ArrayList<Consultation>();
-        List<Document> listDocuments = new ArrayList<Document>();
+        List<Document> listDocuments;
         while(nbrConsultation > 0){
             Consultation consultation = new Consultation();
             consultation.addConsultation(codeDossier);
@@ -103,7 +110,7 @@ public class Main {
     private static void patientWorkflow () {
         Patient patient = new Patient();
         patient.authenticate();
-        Dossier dossier = new  Dossier();
+        Dossier dossier = new Dossier();
         dossier.displayPatientAllFoldersSortedByPending(patient.getId_matricule());
         patient.disconnect();
     }

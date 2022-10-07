@@ -1,8 +1,16 @@
 package Medical.Folder.Dossier;
 
+import Medical.Folder.Consultation.Consultation;
+import Medical.Folder.Document.Document;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static helper.SystemeHelper.println;
 
 public class DossierController {
 
@@ -80,5 +88,30 @@ public class DossierController {
     public long addNewDossier(long idMatricule, int nbrConsultation) {
         return dossierModel.addNewDossier(idMatricule,nbrConsultation);
 
+    }
+
+    public void processDossier(Dossier dossier, List<Consultation> listConsultations){
+        //Map containing valid consultations (key is TRUE in Map)  and non valid consultations (key is FALSE in Map)
+        Map<Boolean, List<Consultation>> mapOfValidAndNonValidConsultations =  listConsultations.stream().collect(Collectors.groupingBy((consultation) -> consultation.getController().checkDateValidity(consultation.getDate())));
+
+        println("printing map of consultations : " + mapOfValidAndNonValidConsultations.toString());
+
+        Map<Boolean, List<Document>> mapOfRefundableAndNotDocuments;
+
+        for(Consultation validConsultation : mapOfValidAndNonValidConsultations.get(true)){
+            mapOfRefundableAndNotDocuments =  validConsultation.getListDocuments().stream().collect(Collectors.groupingBy((document -> document.getController().checkIfRefundable(document.getType(), document.getNom()))));
+
+            println("printing map of documents :" + mapOfRefundableAndNotDocuments.toString());
+            if(mapOfRefundableAndNotDocuments.get(true) != null){
+                for(Document document : mapOfRefundableAndNotDocuments.get(true)){
+                    dossier.totalRefund += document.getMontantPaye() * document.getPercentage() / 100;
+                }
+            }
+        }
+        dossier.controller.saveTotalRefunds(dossier.getCode(), dossier.totalRefund);
+    }
+
+    public void saveTotalRefunds(long code, float totalRefunds){
+        dossierModel.saveTotalRefunds(code, totalRefunds);
     }
 }
